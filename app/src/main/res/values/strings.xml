@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ReliableAlarmClock</string>
+    <string name="procent_choice_button">procenty</string>
+    <string name="time_choice_button">czas</string>
+    <string name="cancel_button">ANULUJ</string>
+    <string name="save_button">ZAPISZ</string>
+</resources>
