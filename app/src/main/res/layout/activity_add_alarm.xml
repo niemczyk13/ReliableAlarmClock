@@ -7,12 +7,44 @@
     tools:context=".AddAlarmActivity">
 
     <EditText
-        android:id="@+id/alarmValue"
-        android:layout_width="200dp"
+        android:id="@+id/hours_value"
+        android:layout_width="80dp"
         android:layout_height="70dp"
-         android:orientation="horizontal"
-        android:inputType="time"
+        android:orientation="horizontal"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:onClick="alarmEditTextClick"
+        android:textSize="50dp"
+        android:maxLines="1"
+        android:maxEms="2"
+        android:maxLength="2"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/colon"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:text=":"
+        android:textSize="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/hours_value"
+        app:layout_constraintStart_toEndOf="@+id/hours_value"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/minutes_value"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:inputType="number"
+        android:digits="0123456789"
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:onClick="alarmEditTextClick"
+        android:textSize="50dp"
+        android:maxLines="1"
+        android:maxEms="2"
+        android:maxLength="2"
+        app:layout_constraintStart_toEndOf="@+id/colon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
@@ -20,8 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@id/alarmValue"
-        app:layout_constraintTop_toBottomOf="@+id/alarmValue">
+        app:layout_constraintStart_toStartOf="@id/hours_value"
+        app:layout_constraintTop_toBottomOf="@+id/hours_value">
         <RadioButton
             android:id="@+id/precent_choice_button"
             android:layout_width="wrap_content"
@@ -38,19 +70,20 @@
     </RadioGroup>
 
     <EditText
-        android:id="@+id/procent_or_time_value"
+        android:id="@+id/precent_or_time_value"
         android:layout_width="200dp"
         android:layout_height="70dp"
+        android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radio_group" />
 
 
-    <TextView
-        android:id="@+id/melody_choice"
+    <EditText
+        android:id="@+id/sound_path"
         android:layout_width="200dp"
         android:layout_height="70dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/procent_or_time_value" />
+        app:layout_constraintTop_toBottomOf="@+id/precent_or_time_value" />
 
     <Button
         android:id="@+id/cancel_button"
@@ -59,7 +92,7 @@
         android:text="@string/cancel_button"
         android:onClick="cancelAddAlarm"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/melody_choice" />
+        app:layout_constraintTop_toBottomOf="@+id/sound_path" />
 
     <Button
         android:id="@+id/save_button"
@@ -68,7 +101,7 @@
         android:text="@string/save_button"
         android:onClick="saveAlarm"
         app:layout_constraintStart_toEndOf="@+id/cancel_button"
-        app:layout_constraintTop_toBottomOf="@+id/melody_choice" />
+        app:layout_constraintTop_toBottomOf="@+id/sound_path" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
