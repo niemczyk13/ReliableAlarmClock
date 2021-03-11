@@ -4,4 +4,6 @@
     <string name="time_choice_button">czas</string>
     <string name="cancel_button">ANULUJ</string>
     <string name="save_button">ZAPISZ</string>
+    <string name="before_discharge_title">Uruchom przed rozładowaniem</string>
+    <string name="nothing_choice_button">brak</string>
 </resources>

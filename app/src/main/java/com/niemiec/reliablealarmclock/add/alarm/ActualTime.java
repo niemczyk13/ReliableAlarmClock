@@ -1,4 +1,4 @@
-package com.niemiec.reliablealarmclock.data;
+package com.niemiec.reliablealarmclock.add.alarm;
 
 import android.os.Build;
 import android.widget.EditText;

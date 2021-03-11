@@ -25,11 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     //TWORZENIE NOWEGO ALARMU --> PRZENOSI DO AKTYWNOŚCI ADDALARM
     public void addAlarm(View view) {
-        ListView listView = findViewById(R.id.alarmsList);
-        String n[] = new String[] {
-                "nana"
-        };
-        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, n));
         Intent intent = new Intent(this, AddAlarmActivity.class);
         startActivity(intent);
     }

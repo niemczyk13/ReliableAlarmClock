@@ -6,16 +6,13 @@ import android.widget.EditText;
 
 public class MinuteValidator {
     private static EditText minute;
-    private static String textBeforeChanged;
 
     public static void addMinutesViewTextChangedListener(EditText m) {
         minute = m;
 
         minute.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                textBeforeChanged = charSequence.toString();
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -35,11 +32,10 @@ public class MinuteValidator {
             int m = Integer.parseInt(s);
             if (m > 5) {
                 minute.setText("0" + s);
-
             }
         } else {
-           // minute.setText(textBeforeChanged);
+            minute.selectAll();
         }
-        minute.selectAll();
+
     }
 }

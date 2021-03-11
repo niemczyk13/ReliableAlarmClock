@@ -4,60 +4,77 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.niemiec.reliablealarmclock.data.ActualTime;
+import com.niemiec.reliablealarmclock.add.alarm.AddAlarmManager;
+import com.niemiec.reliablealarmclock.add.alarm.ActualTime;
+import com.niemiec.reliablealarmclock.data.AlarmSound;
+import com.niemiec.reliablealarmclock.data.EarlyActivationButtons;
 import com.niemiec.reliablealarmclock.validator.HourValidator;
 import com.niemiec.reliablealarmclock.validator.MinuteValidator;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalTime;
-import java.util.Date;
-
 public class AddAlarmActivity extends AppCompatActivity {
+    public static final int DEFAULT_PRECENT_VALUE = 5;
+    public static final String SOUND_PATH = "";
+
+    private AddAlarmManager addAlarmManager;
+
     private EditText hour;
     private EditText minute;
-    private RadioGroup radioButtonsGroup;
+    private RadioGroup radioButtonGroup;
+    private RadioButton nothingChoiceButton;
+    private RadioButton precentChoiceButton;
+    private RadioButton timeChoiceButton;
     private EditText precentOrTime;
     private EditText soundPath;
-
-
-    //chwilowe zmienne
-    private String clock;
-    //private EditText clock;
-    private int radioButtonId = 0;
-    //private boolean precentOrTime;
-    private int precent = 0;
-    private int time = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_alarm);
         getViews();
-        ActualTime.setActualTime(hour, minute);
+        createAddAlarmManager();
+        setDefaultValues();
         activatedHourEditText();
         HourValidator.addHourViewTextChangedListener(hour, minute);
         MinuteValidator.addMinutesViewTextChangedListener(minute);
     }
 
-    private void activatedHourEditText() {
-        hour.selectAll();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-    }
-
     private void getViews() {
         hour = findViewById(R.id.hours_value);
         minute = findViewById(R.id.minutes_value);
-        radioButtonsGroup = findViewById(R.id.radio_group);
+        radioButtonGroup = findViewById(R.id.radio_group);
+        nothingChoiceButton = findViewById(R.id.nothing_choice_button);
+        precentChoiceButton = findViewById(R.id.precent_choice_button);
+        timeChoiceButton = findViewById(R.id.time_choice_button);
         precentOrTime = findViewById(R.id.precent_or_time_value);
         soundPath = findViewById(R.id.sound_path);
+    }
+
+    private void createAddAlarmManager() {
+        addAlarmManager = new AddAlarmManager.Builder(hour, minute)
+                .radioButtonGroup(radioButtonGroup)
+                .nothingChoiceButton(nothingChoiceButton)
+                .precentChoiceBuilder(precentChoiceButton)
+                .timeChoiceButton(timeChoiceButton)
+                .precentOrTime(precentOrTime)
+                .soundPath(soundPath)
+                .build();
+    }
+
+    private void setDefaultValues() {
+        ActualTime.setActualTime(hour, minute);
+        EarlyActivationButtons.setDefaultValue(precentChoiceButton, precentOrTime, DEFAULT_PRECENT_VALUE);
+        AlarmSound.setDefaultSound(soundPath, SOUND_PATH);
+    }
+
+    private void activatedHourEditText() {
+        hour.selectAll();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     public void cancelAddAlarm(View view) {
@@ -66,36 +83,11 @@ public class AddAlarmActivity extends AppCompatActivity {
     }
 
     public void saveAlarm(View view) {
-        //pobranie wszystkich wpisywanych wartości
-        getValues(view);
-        //weryfikacja czy wprowadzone wartości są poprawne
-    }
-
-    private void getValues(View view) {
-        EditText alarmValue = findViewById(R.id.hours_value);
-        clock = alarmValue.getText().toString();
-        getRadioButtonValue();
-        EditText soundPathView = findViewById(R.id.sound_path);
-    }
-
-    private void getRadioButtonValue() {
-        EditText precentOfTime;
-        switch (radioButtonId) {
-            case R.id.precent_choice_button:
-                precentOfTime = findViewById(R.id.precent_or_time_value);
-                precent = Integer.parseInt(precentOfTime.getText().toString());
-                break;
-            case R.id.time_choice_button:
-                precentOfTime = findViewById(R.id.precent_or_time_value);
-                time = Integer.parseInt(precentOfTime.getText().toString());
-                break;
-        }
+        addAlarmManager.saveAlarm(view);
     }
 
     public void onRadioButtonClicked(View view) {
-        RadioGroup radioGroup = findViewById(R.id.radio_group);
-        radioButtonId = radioGroup.getCheckedRadioButtonId();
-        //dodania odpowiednich konfiguracji to EditText - jak procenty to tylko wartości od 0 do 100, a jak czas to czas w minutach
+        addAlarmManager.onRadioButtonClicked(view);
     }
 
     public void alarmEditTextClick(View view) {
