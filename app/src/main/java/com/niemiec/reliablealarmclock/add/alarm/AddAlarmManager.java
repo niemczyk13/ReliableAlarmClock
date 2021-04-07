@@ -5,53 +5,53 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
+import com.niemiec.reliablealarmclock.BasePresenter;
 import com.niemiec.reliablealarmclock.R;
+import com.niemiec.reliablealarmclock.model.Alarm;
+import com.niemiec.reliablealarmclock.model.Alarm21;
+import com.niemiec.reliablealarmclock.model.AlarmBefore21;
+import com.niemiec.reliablealarmclock.validator.HourValidator;
+import com.niemiec.reliablealarmclock.validator.MinuteValidator;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.Date;
 
-public class AddAlarmManager {
+public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> implements AddAlarmContractMVP.Presenter {
     private String dateFormat = "yyyy-MM-dd'T'HH:mm";
 
-    private EditText hour;
-    private EditText minute;
-    private RadioGroup radioButtonGroup;
-    private RadioButton nothingChoiceButton;
-    private RadioButton precentChoiceButton;
-    private RadioButton timeChoiceButton;
-    private EditText precentOrTime;
-    private EditText soundPath;
-
     //musi być data, żeby alarm włączył się tylko raz
-    private LocalDateTime alarmClock;
+    private Alarm alarm;
 
-    private int radioButtonId;
+    private int radioButtonId = -1;
 
-    private AddAlarmManager(Builder builder) {
-        this.hour = builder.hour;
-        this.minute = builder.minute;
-        this.nothingChoiceButton = builder.nothingChoiceButton;
-        this.precentChoiceButton = builder.precentChoiceButton;
-        this.timeChoiceButton = builder.timeChoiceButton;
-        this.precentOrTime = builder.precentOrTime;
-        this.soundPath = builder.soundPath;
+    public AddAlarmManager() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            alarm = new Alarm21();
+        } else {
+            alarm = new AlarmBefore21();
+        }
     }
-
     // TODO
-    public void saveAlarm(View view) {
+    @Override
+    public void saveAlarm() {
         //pobranie alarmu
         getAlarmClock();
         //procente czy czas
+        getRadioButtonValue();
         //pobrane wartości procentów lub czasu
         //pobranie dźwięku alarm
     }
 
+    // TODO - NIE MAM SIĘ ODNOSIC DO HOUR MINUTE ITP. TYLKO DO AKTYWNOSCI I WYWOLYWAC ODPOWIEDNIE METODY
     private void getAlarmClock() {
-        String h = hour.getText().toString();
-        String m = minute.getText().toString();
+        String h = view.getHour();
+        String m = view.getMinute();
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalTime clock = LocalTime.of(Integer.parseInt(h), Integer.parseInt(m));
@@ -59,77 +59,66 @@ public class AddAlarmManager {
             if (clock.isBefore(LocalTime.now())) {
                 date = date.plusDays(1L);
             }
-            alarmClock = LocalDateTime.of(date, clock);
-            precentOrTime.setText(alarmClock.toString());
+            alarm.setAlarmClock(LocalDateTime.of(date, clock));
         } else {
-            Date date = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(h));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(m));
+            if (calendar.before(Calendar.getInstance())) {
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+            }
+            Date date = calendar.getTime();
+            alarm.setAlarmClock(date);
         }
-        Date date = new Date();
-        SimpleDateFormat f = new SimpleDateFormat(dateFormat);
-        //precentOrTime.setText(f.format(date).toString());
     }
+
 
     private void getRadioButtonValue() {
         int precent;
         int time;
         switch (radioButtonId) {
             case R.id.precent_choice_button:
-                precent = Integer.parseInt(precentOrTime.getText().toString());
+                precent = Integer.parseInt(view.getPrecentOrTimeValue());
+                setBatteryPrecetange();
                 break;
             case R.id.time_choice_button:
-                time = Integer.parseInt(precentOrTime.getText().toString());
+                time = Integer.parseInt(view.getPrecentOrTimeValue());
+                setTimeToDischarge();
                 break;
+            default:
+                precent = 0;
+                time = 0;
         }
     }
 
     // TODO
-    public void onRadioButtonClicked(View view) {
-        radioButtonId = radioButtonGroup.getCheckedRadioButtonId();
+    private void setBatteryPrecetange() {
+
+    }
+
+    // TODO
+    private void setTimeToDischarge() {
+        // jeżeli > 0 to duration, inaczej Time
+        int time = Integer.parseInt(view.getPrecentOrTimeValue());
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            alarm.setTimeToDischarge(Time.valueOf(Integer.toString(time )));
+        }
+    }
+
+    // TODO W ZALEŻNOSCI CO KLIKNIE TO AKTYWUJE LUB ZMIENIA WARTOSC DOMYSLNA W OKNIE
+    @Override
+    public void onRadioButtonClicked() {
+        radioButtonId = view.getCheckedRadioButtonId();
         //dodania odpowiednich konfiguracji to EditText - jak procenty to tylko wartości od 0 do 100, a jak czas to czas w minutach
     }
 
-    public static class Builder {
-        private EditText hour;
-        private EditText minute;
-        private RadioGroup radioButtonGroup;
-        private RadioButton nothingChoiceButton = null;
-        private RadioButton precentChoiceButton = null;
-        private RadioButton timeChoiceButton = null;
-        private EditText precentOrTime = null;
-        private EditText soundPath = null;
 
-        public Builder(EditText hour, EditText minute) {
-            this.hour = hour; this.minute = minute;
-        }
-
-        public Builder radioButtonGroup(RadioGroup radioButtonGroup) {
-            this.radioButtonGroup = radioButtonGroup; return this;
-        }
-
-        public Builder nothingChoiceButton(RadioButton nothingChoiceButton) {
-            this.nothingChoiceButton = nothingChoiceButton; return this;
-        }
-
-        public Builder precentChoiceBuilder(RadioButton precentChoiceButton) {
-            this.precentChoiceButton = precentChoiceButton; return this;
-        }
-
-        public Builder timeChoiceButton(RadioButton timeChoiceButton) {
-            this.timeChoiceButton = timeChoiceButton; return this;
-        }
-
-        public Builder precentOrTime(EditText precentOrTime) {
-            this.precentOrTime = precentOrTime; return this;
-        }
-
-        public Builder soundPath(EditText soundPath) {
-            this.soundPath = soundPath; return this;
-        }
-
-        public AddAlarmManager build() {
-            return new AddAlarmManager(this);
-        }
+    public void checkTheCorrectnessOfTheEnteredHour() {
+        HourValidator.checkTheCorrectnessOfTheEnteredHour(view);
     }
 
-
+    @Override
+    public void checkTheCorrectnessOfTheEnteredMinute() {
+        MinuteValidator.checkTheCorrectnessOfTheEnteredMinute(view);
+    }
 }

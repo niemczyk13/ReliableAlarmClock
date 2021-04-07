@@ -4,38 +4,30 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
+
 public class MinuteValidator {
-    private static EditText minute;
+    private static AddAlarmContractMVP.View view;
 
-    public static void addMinutesViewTextChangedListener(EditText m) {
-        minute = m;
-
-        minute.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (minute.hasFocus()) {
-                    checkTheCorrectnessOfTheEnteredMinute();
-                }
-            }
-        });
-    }
-
-    private static void checkTheCorrectnessOfTheEnteredMinute() {
-        String s = minute.getText().toString();
-        if (s.length() == 1) {
-            int m = Integer.parseInt(s);
-            if (m > 5) {
-                minute.setText("0" + s);
-            }
+    public static void checkTheCorrectnessOfTheEnteredMinute(AddAlarmContractMVP.View v) {
+        view = v;
+        String s = view.getMinute();
+        if (oneNumberWasEntered(s)) {
+            addZeroForTheAppropriateNumbers(s);
         } else {
-            minute.selectAll();
+            view.selectAllMinute();
         }
 
+    }
+
+    private static void addZeroForTheAppropriateNumbers(String s) {
+        int m = Integer.parseInt(s);
+        if (m > 5) {
+            view.setMinute("0" + s);
+        }
+    }
+
+    private static boolean oneNumberWasEntered(String s) {
+        return s.length() == 1;
     }
 }

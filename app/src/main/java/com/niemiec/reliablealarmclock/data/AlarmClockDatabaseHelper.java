@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+// TODO to w zależności od tego jaka wersja androida
 public class AlarmClockDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "AlarmClockDB";
     private static final int DB_VERSION = 1;

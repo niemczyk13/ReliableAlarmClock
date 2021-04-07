@@ -1,14 +1,14 @@
-package com.niemiec.reliablealarmclock;
+package com.niemiec.reliablealarmclock.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.niemiec.reliablealarmclock.R;
+import com.niemiec.reliablealarmclock.view.activity.AddAlarmActivity;
 
 public class MainActivity extends AppCompatActivity {
 
