@@ -6,4 +6,14 @@
     <string name="save_button">ZAPISZ</string>
     <string name="before_discharge_title">Uruchom przed rozładowaniem</string>
     <string name="nothing_choice_button">brak</string>
+    <string name="monday">Pn</string>
+    <string name="tuesday">Wt</string>
+    <string name="wednesday">Śr</string>
+    <string name="thursday">Cz</string>
+    <string name="friday">Pt</string>
+    <string name="saturday">So</string>
+    <string name="sunday">Nd</string>
+    <string name="alarm_volume">Głośność alarmu</string>
+    <string name="vibration_text_view">Wibracja</string>
+    <string name="rising_sound_text_view">Narastający dźwięk</string>
 </resources>

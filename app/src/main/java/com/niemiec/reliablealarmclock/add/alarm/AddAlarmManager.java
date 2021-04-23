@@ -1,21 +1,13 @@
 package com.niemiec.reliablealarmclock.add.alarm;
 
-import android.view.View;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-
 import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
 import com.niemiec.reliablealarmclock.BasePresenter;
 import com.niemiec.reliablealarmclock.R;
 import com.niemiec.reliablealarmclock.model.Alarm;
-import com.niemiec.reliablealarmclock.model.Alarm21;
-import com.niemiec.reliablealarmclock.model.AlarmBefore21;
 import com.niemiec.reliablealarmclock.validator.HourValidator;
 import com.niemiec.reliablealarmclock.validator.MinuteValidator;
 
 import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -31,17 +23,20 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
     private int radioButtonId = -1;
 
     public AddAlarmManager() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            alarm = new Alarm21();
-        } else {
-            alarm = new AlarmBefore21();
-        }
+        alarm = new Alarm();
     }
     // TODO
     @Override
     public void saveAlarm() {
+        //get clock
+        //get schedule or date
+
+        //pobranie wszystkich danych i walidacja
+        //alarm validate itd.
+
+        //zapisanie ich w alarmie
         //pobranie alarmu
-        getAlarmClock();
+        setAlarmClock();
         //procente czy czas
         getRadioButtonValue();
         //pobrane wartości procentów lub czasu
@@ -49,9 +44,11 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
     }
 
     // TODO - NIE MAM SIĘ ODNOSIC DO HOUR MINUTE ITP. TYLKO DO AKTYWNOSCI I WYWOLYWAC ODPOWIEDNIE METODY
-    private void getAlarmClock() {
+    private void setAlarmClock() {
         String h = view.getHour();
         String m = view.getMinute();
+/*
+        alarm.setAlarmDataClock();
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalTime clock = LocalTime.of(Integer.parseInt(h), Integer.parseInt(m));
@@ -70,6 +67,9 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
             Date date = calendar.getTime();
             alarm.setAlarmClock(date);
         }
+
+
+ */
     }
 
 
@@ -101,7 +101,7 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
         // jeżeli > 0 to duration, inaczej Time
         int time = Integer.parseInt(view.getPrecentOrTimeValue());
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            alarm.setTimeToDischarge(Time.valueOf(Integer.toString(time )));
+        //    alarm.setTimeToDischarge(Time.valueOf(Integer.toString(time )));
         }
     }
 

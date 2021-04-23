@@ -91,6 +91,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         addAlarmManager.attach(this);
     }
 
+    //TODO - dopisać dodawanie aktualnej daty
     private void setDefaultValues() {
         ActualTime.setActualTime(hour, minute);
         EarlyActivationButtons.setDefaultValue(precentChoiceButton, precentOrTime, DEFAULT_PRECENT_VALUE);
