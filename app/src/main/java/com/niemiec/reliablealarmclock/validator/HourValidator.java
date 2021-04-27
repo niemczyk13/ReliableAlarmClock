@@ -1,10 +1,5 @@
 package com.niemiec.reliablealarmclock.validator;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
-import android.widget.EditText;
-
 import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
 
 public class HourValidator {
@@ -23,7 +18,7 @@ public class HourValidator {
     private static void blockTheEntryOfAnIncorrectFirstDigitOfTheHour(String s) {
         int h = Integer.parseInt(s);
         if (h > 2) {
-            view.setHour("0" + s);
+            view.showHour("0" + s);
             view.setNextFocusAfterHour();
             view.transferActivityToMinutes();
             view.selectAllMinute();
@@ -42,7 +37,7 @@ public class HourValidator {
 
     private static void checkIfLaterThn7Pm(int first, int second) {
         if (second > 3) {
-            view.setHour(Integer.toString(first));
+            view.showHour(Integer.toString(first));
             int position = Integer.toString(first).length();
             view.setHourSelection(position);
         } else {

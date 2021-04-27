@@ -3,16 +3,9 @@ package com.niemiec.reliablealarmclock.add.alarm;
 import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
 import com.niemiec.reliablealarmclock.BasePresenter;
 import com.niemiec.reliablealarmclock.R;
-import com.niemiec.reliablealarmclock.model.Alarm;
+import com.niemiec.reliablealarmclock.model.alarm.Alarm;
 import com.niemiec.reliablealarmclock.validator.HourValidator;
 import com.niemiec.reliablealarmclock.validator.MinuteValidator;
-
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
 
 public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> implements AddAlarmContractMVP.Presenter {
     private String dateFormat = "yyyy-MM-dd'T'HH:mm";
@@ -77,7 +70,7 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
         int precent;
         int time;
         switch (radioButtonId) {
-            case R.id.precent_choice_button:
+            case R.id.percent_choice_button:
                 precent = Integer.parseInt(view.getPrecentOrTimeValue());
                 setBatteryPrecetange();
                 break;

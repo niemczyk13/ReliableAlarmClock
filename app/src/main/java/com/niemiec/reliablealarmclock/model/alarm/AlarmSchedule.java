@@ -1,6 +1,4 @@
-package com.niemiec.reliablealarmclock.model;
-
-import java.util.Map;
+package com.niemiec.reliablealarmclock.model.alarm;
 
 public class AlarmSchedule {
     private Long id;

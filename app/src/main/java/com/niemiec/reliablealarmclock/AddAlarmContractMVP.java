@@ -9,8 +9,8 @@ public interface AddAlarmContractMVP {
         String getPrecentOrTimeValue();
         int getCheckedRadioButtonId();
 
-        void setHour(String hour);
-        void setMinute(String minute);
+        void showHour(String hour);
+        void showMinute(String minute);
         void setNextFocusAfterHour();
         void setHourSelection(int position);
 

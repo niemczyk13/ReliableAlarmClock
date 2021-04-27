@@ -1,4 +1,4 @@
-package com.niemiec.reliablealarmclock.model;
+package com.niemiec.reliablealarmclock.model.alarm;
 
 import java.sql.Time;
 
