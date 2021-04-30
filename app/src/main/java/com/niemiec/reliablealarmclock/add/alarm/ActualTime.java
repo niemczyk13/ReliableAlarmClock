@@ -10,21 +10,43 @@ import java.util.Date;
 import androidx.annotation.RequiresApi;
 
 public class ActualTime {
-    private static EditText hour;
-    private static EditText minute;
+    private EditText hour;
+    private EditText minute;
 
-    public static void setActualTime(EditText h, EditText m) {
+    //TODO
+    public static String getActualHour() {
+        return null;
+    }
+
+    //TODO
+    public static String getActualMinute() {
+        return null;
+    }
+
+    public void setActualTime(EditText h, EditText m) {
         hour = h;
         minute = m;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+
+       // useDate();
+       /* if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             useLocalTime();
         } else {
             useDate();
-        }
+        } */
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private static void useLocalTime() {
+    private void useDate() {
+        Date date = new Date();
+        SimpleDateFormat h = new SimpleDateFormat("HH");
+        SimpleDateFormat m = new SimpleDateFormat("mm");
+
+        hour.setText(h.format(date));
+        minute.setText(m.format(date));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void useDate2() {
         LocalTime localTime = LocalTime.now();
 
         String h = Integer.toString(localTime.getHour());
@@ -34,12 +56,4 @@ public class ActualTime {
         minute.setText(m.length() != 2 ? "0" + m : m);
     }
 
-    private static void useDate() {
-        Date date = new Date();
-        SimpleDateFormat h = new SimpleDateFormat("HH");
-        SimpleDateFormat m = new SimpleDateFormat("mm");
-
-        hour.setText(h.format(date));
-        minute.setText(m.format(date));
-    }
 }

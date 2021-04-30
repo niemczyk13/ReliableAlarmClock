@@ -71,11 +71,11 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
         int time;
         switch (radioButtonId) {
             case R.id.percent_choice_button:
-                precent = Integer.parseInt(view.getPrecentOrTimeValue());
+                precent = Integer.parseInt(view.getPercentOrTimeValue());
                 setBatteryPrecetange();
                 break;
             case R.id.time_choice_button:
-                time = Integer.parseInt(view.getPrecentOrTimeValue());
+                time = Integer.parseInt(view.getPercentOrTimeValue());
                 setTimeToDischarge();
                 break;
             default:
@@ -92,7 +92,7 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
     // TODO
     private void setTimeToDischarge() {
         // jeżeli > 0 to duration, inaczej Time
-        int time = Integer.parseInt(view.getPrecentOrTimeValue());
+        int time = Integer.parseInt(view.getPercentOrTimeValue());
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
         //    alarm.setTimeToDischarge(Time.valueOf(Integer.toString(time )));
         }
@@ -113,5 +113,14 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
     @Override
     public void checkTheCorrectnessOfTheEnteredMinute() {
         MinuteValidator.checkTheCorrectnessOfTheEnteredMinute(view);
+    }
+
+    //TODO
+    @Override
+    public void getActualTime() {
+        String hour = ActualTime.getActualHour();
+        String minute = ActualTime.getActualMinute();
+        view.showHour(hour);
+        view.showMinute(hour);
     }
 }

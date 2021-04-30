@@ -69,6 +69,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_alarm);
         ButterKnife.bind(this);
+
         createAddAlarmManager();
         setDefaultValues();
         activatedHourEditText();
@@ -76,21 +77,22 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         addMinutesViewTextChangedListener();
     }
 
-    private void addMinutesViewTextChangedListener() {
-        minute.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    private void createAddAlarmManager() {
+        addAlarmManager = new AddAlarmManager();
+        addAlarmManager.attach(this);
+    }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    //TODO - dopisać dodawanie aktualnej daty
+    private void setDefaultValues() {
+        addAlarmManager.getActualTime();
+        //ActualTime.setActualTime(hour, minute);
+        EarlyActivationButtons.setDefaultValue(percentChoiceButton, percentOrTime, DEFAULT_PRECENT_VALUE);
+        AlarmSound.setDefaultSound(soundPath, SOUND_PATH);
+    }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (minute.hasFocus()) {
-                    addAlarmManager.checkTheCorrectnessOfTheEnteredMinute();
-                }
-            }
-        });
+    private void activatedHourEditText() {
+        hour.selectAll();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     private void addHourViewTextChangedListener() {
@@ -110,22 +112,23 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         });
     }
 
-    private void createAddAlarmManager() {
-        addAlarmManager = new AddAlarmManager();
-        addAlarmManager.attach(this);
+    private void addMinutesViewTextChangedListener() {
+        minute.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (minute.hasFocus()) {
+                    addAlarmManager.checkTheCorrectnessOfTheEnteredMinute();
+                }
+            }
+        });
     }
 
-    //TODO - dopisać dodawanie aktualnej daty
-    private void setDefaultValues() {
-        ActualTime.setActualTime(hour, minute);
-        EarlyActivationButtons.setDefaultValue(percentChoiceButton, percentOrTime, DEFAULT_PRECENT_VALUE);
-        AlarmSound.setDefaultSound(soundPath, SOUND_PATH);
-    }
-
-    private void activatedHourEditText() {
-        hour.selectAll();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-    }
 
     @OnClick({R.id.hour_edit_text, R.id.minute_edit_text, R.id.percent_or_time_edit_text, R.id.rising_sound_edit_text})
     public void selectAllInEditText(View view) {
@@ -173,7 +176,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     }
 
     @Override
-    public String getPrecentOrTimeValue() {
+    public String getPercentOrTimeValue() {
         return percentOrTime.getText().toString();
     }
 

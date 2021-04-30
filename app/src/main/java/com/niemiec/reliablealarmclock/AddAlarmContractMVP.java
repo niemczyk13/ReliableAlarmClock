@@ -6,7 +6,7 @@ public interface AddAlarmContractMVP {
     interface View {
         String getHour();
         String getMinute();
-        String getPrecentOrTimeValue();
+        String getPercentOrTimeValue();
         int getCheckedRadioButtonId();
 
         void showHour(String hour);
@@ -23,5 +23,6 @@ public interface AddAlarmContractMVP {
         void onRadioButtonClicked();
         void checkTheCorrectnessOfTheEnteredHour();
         void checkTheCorrectnessOfTheEnteredMinute();
+        void getActualTime();
      }
 }
