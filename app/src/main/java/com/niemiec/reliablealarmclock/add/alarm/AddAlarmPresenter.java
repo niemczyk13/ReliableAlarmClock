@@ -3,11 +3,14 @@ package com.niemiec.reliablealarmclock.add.alarm;
 import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
 import com.niemiec.reliablealarmclock.BasePresenter;
 import com.niemiec.reliablealarmclock.R;
+import com.niemiec.reliablealarmclock.data.DefaultStringValues;
+import com.niemiec.reliablealarmclock.data.DefaultValues;
+import com.niemiec.reliablealarmclock.data.DefaultSwitchValues;
 import com.niemiec.reliablealarmclock.model.alarm.Alarm;
 import com.niemiec.reliablealarmclock.validator.HourValidator;
 import com.niemiec.reliablealarmclock.validator.MinuteValidator;
 
-public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> implements AddAlarmContractMVP.Presenter {
+public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> implements AddAlarmContractMVP.Presenter {
     private String dateFormat = "yyyy-MM-dd'T'HH:mm";
 
     //musi być data, żeby alarm włączył się tylko raz
@@ -15,7 +18,7 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
 
     private int radioButtonId = -1;
 
-    public AddAlarmManager() {
+    public AddAlarmPresenter() {
         alarm = new Alarm();
     }
     // TODO
@@ -115,12 +118,40 @@ public class AddAlarmManager extends BasePresenter<AddAlarmContractMVP.View> imp
         MinuteValidator.checkTheCorrectnessOfTheEnteredMinute(view);
     }
 
-    //TODO
+
     @Override
     public void getActualTime() {
         String hour = ActualTime.getActualHour();
         String minute = ActualTime.getActualMinute();
         view.showHour(hour);
-        view.showMinute(hour);
+        view.showMinute(minute);
+    }
+
+    //TODO
+    @Override
+    public void getDischargeDefaultValue() {
+        view.checkedPercent();
+        view.setThePercentageOrTimeToDischarge(DefaultValues.PERCENT.value());
+    }
+
+    @Override
+    public void getDefaultSound() {
+        view.showSoundPath(DefaultStringValues.SOUND_PATH.value());
+    }
+
+    @Override
+    public void getDefaultVolume() {
+        view.setMaxVolume(DefaultValues.MAX_VOLUME.value());
+        view.setVolume(DefaultValues.VOLUME.value());
+    }
+
+    @Override
+    public void getDefaultVibrationValue() {
+        view.setVibration(DefaultSwitchValues.VIBRATION.value());
+    }
+
+    @Override
+    public void getDefaultRisingVolume() {
+        view.setRisingVolume(DefaultSwitchValues.RISING_VOLUME.value());
     }
 }

@@ -18,21 +18,20 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
 import com.niemiec.reliablealarmclock.R;
-import com.niemiec.reliablealarmclock.add.alarm.AddAlarmManager;
-import com.niemiec.reliablealarmclock.add.alarm.ActualTime;
-import com.niemiec.reliablealarmclock.data.AlarmSound;
-import com.niemiec.reliablealarmclock.data.EarlyActivationButtons;
+import com.niemiec.reliablealarmclock.add.alarm.AddAlarmPresenter;
+import com.niemiec.reliablealarmclock.data.OnOffValues;
 
 public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContractMVP.View {
     public static final int DEFAULT_PRECENT_VALUE = 5;
     public static final String SOUND_PATH = "";
 
-    private AddAlarmManager addAlarmManager;
+    private AddAlarmPresenter addAlarmPresenter;
 
     @BindView(R.id.hour_edit_text) EditText hour;
     @BindView(R.id.minute_edit_text) EditText minute;
@@ -52,14 +51,14 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @BindView(R.id.time_choice_button) RadioButton timeChoiceButton;
 
     @BindView(R.id.percent_or_time_edit_text) EditText percentOrTime;
-    @BindView(R.id.sound_path_edit_text) EditText soundPath;
+    @BindView(R.id.sound_path_text_view) TextView soundPath;
 
     @BindView(R.id.alarm_volume_seek_bar) SeekBar alarmVolume;
 
     @BindView(R.id.vibration_switch) Switch vibration;
 
-    @BindView(R.id.rising_sound_switch) Switch risingSoundSwitch;
-    @BindView(R.id.rising_sound_edit_text) EditText risingSoundText;
+    @BindView(R.id.rising_volume_switch) Switch risingVolumeSwitch;
+    @BindView(R.id.rising_volume_edit_text) EditText risingVolumeText;
 
     @BindView(R.id.cancel_button) Button cancel;
     @BindView(R.id.save_button) Button save;
@@ -72,22 +71,26 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
 
         createAddAlarmManager();
         setDefaultValues();
+
+        //TODO
         activatedHourEditText();
         addHourViewTextChangedListener();
         addMinutesViewTextChangedListener();
     }
 
+    //OK!
     private void createAddAlarmManager() {
-        addAlarmManager = new AddAlarmManager();
-        addAlarmManager.attach(this);
+        addAlarmPresenter = new AddAlarmPresenter();
+        addAlarmPresenter.attach(this);
     }
-
-    //TODO - dopisać dodawanie aktualnej daty
+    //OK!
     private void setDefaultValues() {
-        addAlarmManager.getActualTime();
-        //ActualTime.setActualTime(hour, minute);
-        EarlyActivationButtons.setDefaultValue(percentChoiceButton, percentOrTime, DEFAULT_PRECENT_VALUE);
-        AlarmSound.setDefaultSound(soundPath, SOUND_PATH);
+        addAlarmPresenter.getActualTime();
+        addAlarmPresenter.getDischargeDefaultValue();
+        addAlarmPresenter.getDefaultSound();
+        addAlarmPresenter.getDefaultVolume();
+        addAlarmPresenter.getDefaultVibrationValue();
+        addAlarmPresenter.getDefaultRisingVolume();
     }
 
     private void activatedHourEditText() {
@@ -106,7 +109,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
             @Override
             public void afterTextChanged(Editable editable) {
                 if (hour.hasFocus()) {
-                    addAlarmManager.checkTheCorrectnessOfTheEnteredHour();
+                    addAlarmPresenter.checkTheCorrectnessOfTheEnteredHour();
                 }
             }
         });
@@ -123,14 +126,14 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
             @Override
             public void afterTextChanged(Editable editable) {
                 if (minute.hasFocus()) {
-                    addAlarmManager.checkTheCorrectnessOfTheEnteredMinute();
+                    addAlarmPresenter.checkTheCorrectnessOfTheEnteredMinute();
                 }
             }
         });
     }
 
 
-    @OnClick({R.id.hour_edit_text, R.id.minute_edit_text, R.id.percent_or_time_edit_text, R.id.rising_sound_edit_text})
+    @OnClick({R.id.hour_edit_text, R.id.minute_edit_text, R.id.percent_or_time_edit_text, R.id.rising_volume_edit_text})
     public void selectAllInEditText(View view) {
         EditText et = findViewById(view.getId());
         et.selectAll();
@@ -149,7 +152,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
 
     @OnClick({R.id.nothing_choice_button, R.id.percent_choice_button, R.id.time_choice_button})
     public void onPercentOrTimeRadioGroupClick(View view) {
-        addAlarmManager.onRadioButtonClicked();
+        addAlarmPresenter.onRadioButtonClicked();
     }
 
     @OnClick(R.id.cancel_button)
@@ -160,7 +163,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
 
     @OnClick(R.id.save_button)
     public void saveAlarm(View view) {
-        addAlarmManager.saveAlarm();
+        addAlarmPresenter.saveAlarm();
     }
 
 
@@ -213,6 +216,42 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @Override
     public void setHourSelection(int position) {
         hour.setSelection(position);
+    }
+
+    @Override
+    public void checkedPercent() {
+        percentChoiceButton.setChecked(true);
+    }
+
+    @Override
+    public void setThePercentageOrTimeToDischarge(int value) {
+        percentOrTime.setText(Integer.toString(value));
+    }
+
+    @Override
+    public void showSoundPath(String path) {
+        soundPath.setText(path);
+    }
+
+    @Override
+    public void setMaxVolume(int maxVolume) {
+        alarmVolume.setMax(maxVolume);
+    }
+
+    @Override
+    public void setVolume(int volume) {
+        alarmVolume.setProgress(volume);
+    }
+
+    @Override
+    public void setVibration(boolean value) {
+        vibration.setChecked(value);
+    }
+
+    @Override
+    public void setRisingVolume(boolean risingVolume) {
+        risingVolumeSwitch.setChecked(risingVolume);
+        risingVolumeText.setEnabled(risingVolume);
     }
 
 

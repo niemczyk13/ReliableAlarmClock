@@ -13,6 +13,13 @@ public interface AddAlarmContractMVP {
         void showMinute(String minute);
         void setNextFocusAfterHour();
         void setHourSelection(int position);
+        void checkedPercent();
+        void setThePercentageOrTimeToDischarge(int value);
+        void showSoundPath(String path);
+        void setMaxVolume(int maxVolume);
+        void setVolume(int volume);
+        void setVibration(boolean value);
+        void setRisingVolume(boolean risingVolume);
 
         void transferActivityToMinutes();
         void selectAllMinute();
@@ -24,5 +31,10 @@ public interface AddAlarmContractMVP {
         void checkTheCorrectnessOfTheEnteredHour();
         void checkTheCorrectnessOfTheEnteredMinute();
         void getActualTime();
+        void getDischargeDefaultValue();
+        void getDefaultSound();
+        void getDefaultVolume();
+        void getDefaultVibrationValue();
+        void getDefaultRisingVolume();
      }
 }

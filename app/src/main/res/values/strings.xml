@@ -16,4 +16,5 @@
     <string name="alarm_volume">Głośność alarmu</string>
     <string name="vibration_text_view">Wibracja</string>
     <string name="rising_sound_text_view">Narastający dźwięk</string>
+    <string name="alarm_sound">Dźwięk alarmu</string>
 </resources>

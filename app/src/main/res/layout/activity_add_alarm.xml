@@ -181,14 +181,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/percent_time_radio_group" />
 
-    <EditText
-        android:id="@+id/sound_path_edit_text"
-        android:layout_width="200dp"
-        android:layout_height="70dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+
+    <TextView
+        android:id="@+id/sound_path_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/percent_or_time_edit_text"
+        android:text="@string/alarm_sound"
+        />
+
+    <TextView
+        android:id="@+id/sound_path_text_view"
+        android:layout_width="206dp"
+        android:layout_height="27dp"
+        app:layout_constraintStart_toEndOf="@+id/sound_path_title_text_view"
         app:layout_constraintTop_toBottomOf="@+id/percent_or_time_edit_text" />
 
     <TextView
@@ -197,7 +204,7 @@
         android:layout_height="wrap_content"
         android:text="@string/alarm_volume"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sound_path_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/sound_path_text_view" />
 
     <SeekBar
         android:id="@+id/alarm_volume_seek_bar"
@@ -223,7 +230,7 @@
         app:layout_constraintTop_toBottomOf="@+id/alarm_volume_seek_bar" />
 
     <TextView
-        android:id="@+id/rising_sound_text_view"
+        android:id="@+id/rising_volume_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/rising_sound_text_view"
@@ -231,19 +238,18 @@
         app:layout_constraintTop_toBottomOf="@+id/vibration_text_view" />
 
     <Switch
-        android:id="@+id/rising_sound_switch"
+        android:id="@+id/rising_volume_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false"
-        app:layout_constraintStart_toEndOf="@+id/rising_sound_text_view"
+        app:layout_constraintStart_toEndOf="@+id/rising_volume_text_view"
         app:layout_constraintTop_toBottomOf="@+id/vibration_switch" />
 
     <EditText
-        android:id="@+id/rising_sound_edit_text"
+        android:id="@+id/rising_volume_edit_text"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rising_sound_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/rising_volume_text_view" />
 
     <Button
         android:id="@+id/cancel_button"
@@ -252,7 +258,7 @@
         android:onClick="cancelAddAlarm"
         android:text="@string/cancel_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rising_sound_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/rising_volume_edit_text" />
 
     <Button
         android:id="@+id/save_button"
@@ -261,7 +267,7 @@
         android:onClick="saveAlarm"
         android:text="@string/save_button"
         app:layout_constraintStart_toEndOf="@+id/cancel_button"
-        app:layout_constraintTop_toBottomOf="@+id/rising_sound_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/rising_volume_edit_text" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
