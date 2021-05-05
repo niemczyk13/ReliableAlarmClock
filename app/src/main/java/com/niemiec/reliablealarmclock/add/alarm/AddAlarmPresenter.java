@@ -110,6 +110,12 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
 
 
     public void checkTheCorrectnessOfTheEnteredHour() {
+        //TODO
+        //na początku dać sprawdzeni czy ciąg zawiera jakiś znak inny niż liczba
+        //jeżeli nie to wtedy metoda poniżej
+
+        //pobieramy hour w String w tym miejscu
+        String hour = view.getHour();
         HourValidator.checkTheCorrectnessOfTheEnteredHour(view);
     }
 
@@ -153,5 +159,10 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
     @Override
     public void getDefaultRisingVolume() {
         view.setRisingVolume(DefaultSwitchValues.RISING_VOLUME.value());
+    }
+
+    @Override
+    public void activatedHourEditText() {
+        view.selectHour();
     }
 }

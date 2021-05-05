@@ -71,9 +71,9 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
 
         createAddAlarmManager();
         setDefaultValues();
-
-        //TODO
         activatedHourEditText();
+        //TODO
+
         addHourViewTextChangedListener();
         addMinutesViewTextChangedListener();
     }
@@ -94,8 +94,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     }
 
     private void activatedHourEditText() {
-        hour.selectAll();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        addAlarmPresenter.activatedHourEditText();
     }
 
     private void addHourViewTextChangedListener() {
@@ -252,6 +251,12 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     public void setRisingVolume(boolean risingVolume) {
         risingVolumeSwitch.setChecked(risingVolume);
         risingVolumeText.setEnabled(risingVolume);
+    }
+
+    @Override
+    public void selectHour() {
+        hour.selectAll();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
 

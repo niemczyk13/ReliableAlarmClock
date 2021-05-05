@@ -20,6 +20,7 @@ public interface AddAlarmContractMVP {
         void setVolume(int volume);
         void setVibration(boolean value);
         void setRisingVolume(boolean risingVolume);
+        void selectHour();
 
         void transferActivityToMinutes();
         void selectAllMinute();
@@ -36,5 +37,6 @@ public interface AddAlarmContractMVP {
         void getDefaultVolume();
         void getDefaultVibrationValue();
         void getDefaultRisingVolume();
+        void activatedHourEditText();
      }
 }
