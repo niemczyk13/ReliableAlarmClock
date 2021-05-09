@@ -28,8 +28,6 @@ import com.niemiec.reliablealarmclock.add.alarm.AddAlarmPresenter;
 import com.niemiec.reliablealarmclock.data.OnOffValues;
 
 public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContractMVP.View {
-    public static final int DEFAULT_PRECENT_VALUE = 5;
-    public static final String SOUND_PATH = "";
 
     private AddAlarmPresenter addAlarmPresenter;
 
@@ -112,6 +110,15 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
                 }
             }
         });
+    }
+
+    @OnClick(R.id.minute_edit_text)
+    public void minuteEditTextClick(View view) {
+        //TODO gdy jest jeden znak lub nie ma żadnego
+        //gdy nie ma zadnego to pobieramy godzinę systemową
+        if (hour.getText().length() == 1 || hour.getText().length() == 0) {
+            addAlarmPresenter.checkTheCorrectnessOfTheEnteredHourWhenMinuteCLick();
+        }
     }
 
     private void addMinutesViewTextChangedListener() {

@@ -111,12 +111,30 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
 
     public void checkTheCorrectnessOfTheEnteredHour() {
         //TODO
-        //na początku dać sprawdzeni czy ciąg zawiera jakiś znak inny niż liczba
-        //jeżeli nie to wtedy metoda poniżej
 
-        //pobieramy hour w String w tym miejscu
         String hour = view.getHour();
-        HourValidator.checkTheCorrectnessOfTheEnteredHour(view);
+        String result = HourValidator.checkTheCorrectnessOfTheEnteredHour(hour);
+
+        if (!hour.equals(result))
+            view.showHour(result);
+
+        if (result.length() == 1) {
+            int first = Integer.parseInt(result.substring(0, 1));
+            int position = Integer.toString(first).length();
+            view.setHourSelection(position);
+        } else if (result.length() == 2){
+            view.setNextFocusAfterHour();
+            view.transferActivityToMinutes();
+            view.selectAllMinute();
+        }
+
+
+    }
+
+    @Override
+    public void checkTheCorrectnessOfTheEnteredHourWhenMinuteCLick() {
+        //TODO
+        System.out.println("JESTEM TU!");
     }
 
     @Override

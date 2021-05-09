@@ -30,6 +30,7 @@ public interface AddAlarmContractMVP {
         void saveAlarm();
         void onRadioButtonClicked();
         void checkTheCorrectnessOfTheEnteredHour();
+        void checkTheCorrectnessOfTheEnteredHourWhenMinuteCLick();
         void checkTheCorrectnessOfTheEnteredMinute();
         void getActualTime();
         void getDischargeDefaultValue();

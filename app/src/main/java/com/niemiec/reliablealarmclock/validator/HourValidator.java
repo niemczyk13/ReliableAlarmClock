@@ -1,20 +1,19 @@
 package com.niemiec.reliablealarmclock.validator;
 
+import android.widget.Toast;
+
 import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
+import com.niemiec.reliablealarmclock.view.activity.AddAlarmActivity;
 
 public class HourValidator {
-    private static AddAlarmContractMVP.View view;
-    private static String result = "";
 
-    public static String checkTheCorrectnessOfTheEnteredHour(AddAlarmContractMVP.View v) {
-        view = v;
-        String s = view.getHour();
-        if (oneCharacterWasEntered(s.length())) {
-            blockTheEntryOfAnIncorrectFirstDigitOfTheHour(s);
-        } else if (moreThanOneCharacterHasBeenEntered(s.length())) {
-            blockTheEntryOfAnIncorrectSecondDigitOfTheHour(s);
+    public static String checkTheCorrectnessOfTheEnteredHour(String hour) {
+        if (oneCharacterWasEntered(hour.length())) {
+            return blockTheEntryOfAnIncorrectFirstDigitOfTheHour(hour);
+        } else if (moreThanOneCharacterHasBeenEntered(hour.length())) {
+            return blockTheEntryOfAnIncorrectSecondDigitOfTheHour(hour);
         }
-        return result;
+        return hour;
     }
 
     private static boolean oneCharacterWasEntered(int length) {
@@ -25,42 +24,35 @@ public class HourValidator {
         return length > 1;
     }
 
-    private static void blockTheEntryOfAnIncorrectFirstDigitOfTheHour(String s) {
-        int h = Integer.parseInt(s);
-        if (h > 2) {
-            result = "0" + s;
-
-            view.showHour("0" + s);
-            view.setNextFocusAfterHour();
-            view.transferActivityToMinutes();
-            view.selectAllMinute();
+    private static String blockTheEntryOfAnIncorrectFirstDigitOfTheHour(String hour) {
+        int h = Integer.parseInt(hour);
+        if (h > 2 && h < 10) {
+            String hReturn = "0" + hour;
+            return hReturn;
         }
+        return hour;
     }
 
-    private static void blockTheEntryOfAnIncorrectSecondDigitOfTheHour(String s) {
-        int first = Integer.parseInt(s.substring(0, 1));
-        int second = Integer.parseInt(s.substring(1, 2));
-        if (first == 2) {
-            checkIfLaterThan7Pm(first, second);
-        } else {
-            switchToTheMinutesViewAndSelectAll();
+    private static String blockTheEntryOfAnIncorrectSecondDigitOfTheHour(String hour) {
+        int h = Integer.parseInt(hour);
+
+        if (checkIf24IsEntered(h)) {
+            return "00";
         }
+
+        if (checkIfThereIsAnHourGreaterThan24(h)) {
+            return "2";
+        }
+
+        return hour;
     }
 
-    private static void checkIfLaterThan7Pm(int first, int second) {
-        if (second > 3) {
-            view.showHour(Integer.toString(first));
-            int position = Integer.toString(first).length();
-            view.setHourSelection(position);
-        } else {
-            switchToTheMinutesViewAndSelectAll();
-        }
+    private static boolean checkIf24IsEntered(int hour) {
+        return hour == 24;
     }
 
-    private static void switchToTheMinutesViewAndSelectAll() {
-        view.setNextFocusAfterHour();
-        view.transferActivityToMinutes();
-        view.selectAllMinute();
+    private static boolean checkIfThereIsAnHourGreaterThan24(int hour) {
+        return hour > 23;
     }
 
 }
