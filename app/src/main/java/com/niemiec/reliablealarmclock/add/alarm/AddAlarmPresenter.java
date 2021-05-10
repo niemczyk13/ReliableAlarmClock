@@ -132,9 +132,28 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
     }
 
     @Override
-    public void checkTheCorrectnessOfTheEnteredHourWhenMinuteCLick() {
-        //TODO
+    public void hourFocusChange(boolean hasFocus) {
+        if (!hasFocus) {
+            String hour = view.getHour();
+            String result = HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(hour);
+
+            if (!hour.equals(result)) {
+                view.showHour(result);
+            }
+        }
+    }
+
+    @Override
+    public void minuteEditTextClick() {
+        //TODO gdy jest jeden znak lub nie ma żadnego
+        //gdy nie ma zadnego to pobieramy godzinę systemową
         System.out.println("JESTEM TU!");
+        view.selectMinute();
+        if (view.getHour().length() == 1) {
+
+        } else if (view.getMinute().length() == 0) {
+
+        }
     }
 
     @Override

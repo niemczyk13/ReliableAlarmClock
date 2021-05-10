@@ -67,12 +67,17 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         setContentView(R.layout.activity_add_alarm);
         ButterKnife.bind(this);
 
+        //TODO umieścić to w odpowiednim miejscu
+        hour.setSelectAllOnFocus(true);
+        minute.setSelectAllOnFocus(true);
+
         createAddAlarmManager();
         setDefaultValues();
         activatedHourEditText();
         //TODO
 
         addHourViewTextChangedListener();
+        addHourFocusChangeListener();
         addMinutesViewTextChangedListener();
     }
 
@@ -112,13 +117,25 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         });
     }
 
+    private void addHourFocusChangeListener() {
+        hour.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                addAlarmPresenter.hourFocusChange(hasFocus);
+            }
+        });
+    }
+
+    @OnClick(R.id.hour_edit_text)
+    public void hourEditTextClick(View view) {
+
+    }
+
     @OnClick(R.id.minute_edit_text)
     public void minuteEditTextClick(View view) {
-        //TODO gdy jest jeden znak lub nie ma żadnego
-        //gdy nie ma zadnego to pobieramy godzinę systemową
-        if (hour.getText().length() == 1 || hour.getText().length() == 0) {
-            addAlarmPresenter.checkTheCorrectnessOfTheEnteredHourWhenMinuteCLick();
-        }
+        //TODO
+        addAlarmPresenter.minuteEditTextClick();
     }
 
     private void addMinutesViewTextChangedListener() {
@@ -263,6 +280,12 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @Override
     public void selectHour() {
         hour.selectAll();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+    @Override
+    public void selectMinute() {
+        minute.selectAll();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 

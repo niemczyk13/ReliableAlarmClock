@@ -21,6 +21,7 @@ public interface AddAlarmContractMVP {
         void setVibration(boolean value);
         void setRisingVolume(boolean risingVolume);
         void selectHour();
+        void selectMinute();
 
         void transferActivityToMinutes();
         void selectAllMinute();
@@ -30,7 +31,8 @@ public interface AddAlarmContractMVP {
         void saveAlarm();
         void onRadioButtonClicked();
         void checkTheCorrectnessOfTheEnteredHour();
-        void checkTheCorrectnessOfTheEnteredHourWhenMinuteCLick();
+        void hourFocusChange(boolean hasFocus);
+        void minuteEditTextClick();
         void checkTheCorrectnessOfTheEnteredMinute();
         void getActualTime();
         void getDischargeDefaultValue();

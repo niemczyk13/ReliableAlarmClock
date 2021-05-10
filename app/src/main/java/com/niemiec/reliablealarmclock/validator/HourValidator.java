@@ -8,20 +8,20 @@ import com.niemiec.reliablealarmclock.view.activity.AddAlarmActivity;
 public class HourValidator {
 
     public static String checkTheCorrectnessOfTheEnteredHour(String hour) {
-        if (oneCharacterWasEntered(hour.length())) {
+        if (oneCharacterWasEntered(hour)) {
             return blockTheEntryOfAnIncorrectFirstDigitOfTheHour(hour);
-        } else if (moreThanOneCharacterHasBeenEntered(hour.length())) {
+        } else if (moreThanOneCharacterHasBeenEntered(hour)) {
             return blockTheEntryOfAnIncorrectSecondDigitOfTheHour(hour);
         }
         return hour;
     }
 
-    private static boolean oneCharacterWasEntered(int length) {
-        return length == 1;
+    private static boolean oneCharacterWasEntered(String hour) {
+        return hour.length() == 1;
     }
 
-    private static boolean moreThanOneCharacterHasBeenEntered(int length) {
-        return length > 1;
+    private static boolean moreThanOneCharacterHasBeenEntered(String hour) {
+        return hour.length() > 1;
     }
 
     private static String blockTheEntryOfAnIncorrectFirstDigitOfTheHour(String hour) {
@@ -55,4 +55,11 @@ public class HourValidator {
         return hour > 23;
     }
 
+    public static String checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(String hour) {
+        if (oneCharacterWasEntered(hour)) {
+            String hReturn = "0" + hour;
+            return hReturn;
+        }
+        return hour;
+    }
 }

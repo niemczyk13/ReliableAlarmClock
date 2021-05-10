@@ -34,4 +34,32 @@ public class HourValidatorTest {
         Assert.assertEquals("00", HourValidator.checkTheCorrectnessOfTheEnteredHour(k));
 
     }
+
+    @Test
+    public void checkTheCorrectnessOfTheEnteredHourWhenHourChangFocusTest() {
+        String a = "0";
+        String b = "1";
+        String c = "2";
+        String d = "3";
+        String e = "9";
+        String f = "00";
+        String g = "01";
+        String h = "02";
+        String i = "03";
+        String j = "09";
+        String k = "23";
+
+        Assert.assertEquals("00", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(a));
+        Assert.assertEquals("01", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(b));
+        Assert.assertEquals("02", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(c));
+        Assert.assertEquals("03", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(d));
+        Assert.assertEquals("09", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(e));
+        Assert.assertEquals("00", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(f));
+        Assert.assertEquals("01", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(g));
+        Assert.assertEquals("02", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(h));
+        Assert.assertEquals("03", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(i));
+        Assert.assertEquals("09", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(j));
+        Assert.assertEquals("23", HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(k));
+
+    }
 }
