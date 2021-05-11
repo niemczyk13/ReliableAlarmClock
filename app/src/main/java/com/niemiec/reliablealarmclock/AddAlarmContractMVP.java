@@ -13,6 +13,7 @@ public interface AddAlarmContractMVP {
         void showMinute(String minute);
         void setNextFocusAfterHour();
         void setHourSelection(int position);
+        void setMinuteSelection(int position);
         void checkedPercent();
         void setThePercentageOrTimeToDischarge(int value);
         void showSoundPath(String path);
@@ -32,8 +33,8 @@ public interface AddAlarmContractMVP {
         void onRadioButtonClicked();
         void checkTheCorrectnessOfTheEnteredHour();
         void hourFocusChange(boolean hasFocus);
-        void minuteEditTextClick();
         void checkTheCorrectnessOfTheEnteredMinute();
+        void minuteFocusChange(boolean hasFocus);
         void getActualTime();
         void getDischargeDefaultValue();
         void getDefaultSound();

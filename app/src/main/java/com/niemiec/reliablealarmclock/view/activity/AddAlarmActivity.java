@@ -79,6 +79,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         addHourViewTextChangedListener();
         addHourFocusChangeListener();
         addMinutesViewTextChangedListener();
+        addMinuteFocusChangeListener();
     }
 
     //OK!
@@ -118,24 +119,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     }
 
     private void addHourFocusChangeListener() {
-        hour.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                addAlarmPresenter.hourFocusChange(hasFocus);
-            }
-        });
-    }
-
-    @OnClick(R.id.hour_edit_text)
-    public void hourEditTextClick(View view) {
-
-    }
-
-    @OnClick(R.id.minute_edit_text)
-    public void minuteEditTextClick(View view) {
-        //TODO
-        addAlarmPresenter.minuteEditTextClick();
+        hour.setOnFocusChangeListener((view, hasFocus) -> addAlarmPresenter.hourFocusChange(hasFocus));
     }
 
     private void addMinutesViewTextChangedListener() {
@@ -153,6 +137,10 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
                 }
             }
         });
+    }
+
+    private void addMinuteFocusChangeListener() {
+        minute.setOnFocusChangeListener((view, hasFocus) -> addAlarmPresenter.minuteFocusChange(hasFocus));
     }
 
 
@@ -239,6 +227,11 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @Override
     public void setHourSelection(int position) {
         hour.setSelection(position);
+    }
+
+    @Override
+    public void setMinuteSelection(int position) {
+        minute.setSelection(position);
     }
 
     @Override

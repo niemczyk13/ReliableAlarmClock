@@ -1,29 +1,34 @@
 package com.niemiec.reliablealarmclock.validator;
 
-import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
-
 public class MinuteValidator {
-    private static AddAlarmContractMVP.View view;
 
-    public static void checkTheCorrectnessOfTheEnteredMinute(AddAlarmContractMVP.View v) {
-        view = v;
-        String s = view.getMinute();
-        if (oneNumberWasEntered(s)) {
-            addZeroForTheAppropriateNumbers(s);
-        } else {
-            view.selectAllMinute();
+
+    public static String checkTheCorrectnessOfTheEnteredMinute(String minute) {
+        if (oneCharacterWasEntered(minute)) {
+           return addZeroForTheAppropriateNumbers(minute);
         }
+        return minute;
 
     }
 
-    private static void addZeroForTheAppropriateNumbers(String s) {
-        int m = Integer.parseInt(s);
+    private static String addZeroForTheAppropriateNumbers(String minute) {
+        int m = Integer.parseInt(minute);
         if (m > 5) {
-            view.showMinute("0" + s);
+            String rMinute = "0" + minute;
+            return rMinute;
         }
+        return minute;
     }
 
-    private static boolean oneNumberWasEntered(String s) {
+    private static boolean oneCharacterWasEntered(String s) {
         return s.length() == 1;
+    }
+
+    public static String checkTheCorrectnessOfTheEnteredMinuteWhenMinuteChangFocus(String minute) {
+        if (oneCharacterWasEntered(minute)) {
+            String rMinute = "0" + minute;
+            return rMinute;
+        }
+        return minute;
     }
 }

@@ -135,6 +135,12 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
     public void hourFocusChange(boolean hasFocus) {
         if (!hasFocus) {
             String hour = view.getHour();
+            if (hour.isEmpty()) {
+                hour = ActualTime.getActualHour();
+                view.showHour(hour);
+                return;
+            }
+
             String result = HourValidator.checkTheCorrectnessOfTheEnteredHourWhenHourChangFocus(hour);
 
             if (!hour.equals(result)) {
@@ -144,21 +150,38 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
     }
 
     @Override
-    public void minuteEditTextClick() {
-        //TODO gdy jest jeden znak lub nie ma żadnego
-        //gdy nie ma zadnego to pobieramy godzinę systemową
-        System.out.println("JESTEM TU!");
-        view.selectMinute();
-        if (view.getHour().length() == 1) {
+    public void checkTheCorrectnessOfTheEnteredMinute() {
+        String minute = view.getMinute();
+        String result = MinuteValidator.checkTheCorrectnessOfTheEnteredMinute(minute);
 
-        } else if (view.getMinute().length() == 0) {
+        if (minute != result)
+            view.showMinute(result);
 
+        if (result.length() == 1) {
+            int first = Integer.parseInt(result.substring(0, 1));
+            int position = Integer.toString(first).length();
+            view.setMinuteSelection(position);
+        } else {
+            view.selectMinute();
         }
     }
 
     @Override
-    public void checkTheCorrectnessOfTheEnteredMinute() {
-        MinuteValidator.checkTheCorrectnessOfTheEnteredMinute(view);
+    public void minuteFocusChange(boolean hasFocus) {
+        if (!hasFocus) {
+            String minute = view.getMinute();
+            if(minute.isEmpty()) {
+                minute = ActualTime.getActualMinute();
+                view.showMinute(minute);
+                return;
+            }
+
+            String result = MinuteValidator.checkTheCorrectnessOfTheEnteredMinuteWhenMinuteChangFocus(minute);
+
+            if(!minute.equals(result)) {
+                view.showMinute(result);
+            }
+        }
     }
 
 
