@@ -9,7 +9,9 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp">
 
     <EditText
         android:id="@+id/hour_edit_text"
@@ -22,6 +24,7 @@
         android:maxLines="1"
         android:maxEms="2"
         android:maxLength="2"
+        android:selectAllOnFocus="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,6 +50,7 @@
         android:maxLines="1"
         android:maxEms="2"
         android:maxLength="2"
+        android:selectAllOnFocus="true"
         app:layout_constraintStart_toEndOf="@+id/colon"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -82,50 +86,71 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/day_1_button"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="1dp"
+            android:checkable="true"
             android:background="@drawable/roundedbutton"
             android:text="@string/monday" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/day_2_button"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="1dp"
+            android:checkable="true"
             android:background="@drawable/roundedbutton"
             android:text="@string/tuesday" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/day_3_button"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="1dp"
+            android:checkable="true"
             android:background="@drawable/roundedbutton"
             android:text="@string/wednesday" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/day_4_button"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="1dp"
+            android:checkable="true"
             android:background="@drawable/roundedbutton"
             android:text="@string/thursday" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/day_5_button"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="1dp"
+            android:checkable="true"
             android:background="@drawable/roundedbutton"
             android:text="@string/friday" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/day_6_button"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="1dp"
+            android:checkable="true"
             android:background="@drawable/roundedbutton"
             android:text="@string/saturday" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/day_7_button"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_weight="1"
+            android:padding="1dp"
+            android:checkable="true"
             android:background="@drawable/roundedbutton"
             android:text="@string/sunday" />
 

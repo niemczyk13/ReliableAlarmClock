@@ -67,15 +67,9 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         setContentView(R.layout.activity_add_alarm);
         ButterKnife.bind(this);
 
-        //TODO umieścić to w odpowiednim miejscu
-        hour.setSelectAllOnFocus(true);
-        minute.setSelectAllOnFocus(true);
-
         createAddAlarmManager();
         setDefaultValues();
         activatedHourEditText();
-        //TODO
-
         addHourViewTextChangedListener();
         addHourFocusChangeListener();
         addMinutesViewTextChangedListener();
@@ -154,11 +148,19 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     public void calendarImageButtonClick(View view) {
     }
 
+    //TODO
     @OnClick({R.id.day_1_button, R.id.day_2_button, R.id.day_3_button, R.id.day_4_button,
         R.id.day_5_button, R.id.day_6_button, R.id.day_7_button})
     public void dayButtonClick(View view) {
-        Toast.makeText(getApplicationContext(), "Test " + view.getId(), Toast.LENGTH_LONG).show();
-
+        Toast.makeText(getApplicationContext(), "Test " + day1.isChecked(), Toast.LENGTH_LONG).show();
+        if (view.getId() == R.id.day_1_button) {
+            if (day1.isChecked()) {
+                day1.setChecked(true);
+            } else {
+                day1.setChecked(false);
+            }
+            Toast.makeText(getApplicationContext(), "Test " + day1.isChecked(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick({R.id.nothing_choice_button, R.id.percent_choice_button, R.id.time_choice_button})
