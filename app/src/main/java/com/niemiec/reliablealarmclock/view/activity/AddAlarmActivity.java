@@ -43,10 +43,9 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @BindView(R.id.day_6_button) MaterialButton day6;
     @BindView(R.id.day_7_button) MaterialButton day7;
 
-    @BindView(R.id.percent_time_radio_group) RadioGroup radioButtonGroup;
-    @BindView(R.id.nothing_choice_button) RadioButton nothingChoiceButton;
-    @BindView(R.id.percent_choice_button) RadioButton percentChoiceButton;
-    @BindView(R.id.time_choice_button) RadioButton timeChoiceButton;
+    @BindView(R.id.nothing_choice_button) MaterialButton nothingChoiceButton;
+    @BindView(R.id.percent_choice_button) MaterialButton percentChoiceButton;
+    @BindView(R.id.time_choice_button) MaterialButton timeChoiceButton;
 
     @BindView(R.id.percent_or_time_edit_text) EditText percentOrTime;
     @BindView(R.id.sound_path_text_view) TextView soundPath;
@@ -144,6 +143,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         et.selectAll();
     }
 
+    //TODO
     @OnClick(R.id.calendar_image_button )
     public void calendarImageButtonClick(View view) {
     }
@@ -165,6 +165,22 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
 
     @OnClick({R.id.nothing_choice_button, R.id.percent_choice_button, R.id.time_choice_button})
     public void onPercentOrTimeRadioGroupClick(View view) {
+        if (view.getId() == R.id.nothing_choice_button) {
+                nothingChoiceButton.setChecked(true);
+                percentChoiceButton.setChecked(false);
+                timeChoiceButton.setChecked(false);
+        }
+        if (view.getId() == R.id.percent_choice_button) {
+                percentChoiceButton.setChecked(true);
+                nothingChoiceButton.setChecked(false);
+                timeChoiceButton.setChecked(false);
+        }
+        if (view.getId() == R.id.time_choice_button) {
+                timeChoiceButton.setChecked(true);
+                nothingChoiceButton.setChecked(false);
+                percentChoiceButton.setChecked(false);
+        }
+
         addAlarmPresenter.onRadioButtonClicked();
     }
 
@@ -196,9 +212,21 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         return percentOrTime.getText().toString();
     }
 
+    //TODO
     @Override
-    public int getCheckedRadioButtonId() {
-        return radioButtonGroup.getCheckedRadioButtonId();
+    public int getCheckedPercentOrTimeId() {
+        if (nothingChoiceButton.isChecked()) {
+            Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_SHORT).show();
+            return R.id.nothing_choice_button;
+        } else if (percentChoiceButton.isChecked()) {
+            Toast.makeText(getApplicationContext(), "percent", Toast.LENGTH_SHORT).show();
+            return R.id.percent_choice_button;
+        } else if (timeChoiceButton.isChecked()) {
+            Toast.makeText(getApplicationContext(), "time", Toast.LENGTH_SHORT).show();
+            return R.id.time_choice_button;
+        }
+
+        return 0;
     }
 
     @Override

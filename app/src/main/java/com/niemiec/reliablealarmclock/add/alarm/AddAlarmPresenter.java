@@ -1,5 +1,7 @@
 package com.niemiec.reliablealarmclock.add.alarm;
 
+import android.widget.Toast;
+
 import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
 import com.niemiec.reliablealarmclock.BasePresenter;
 import com.niemiec.reliablealarmclock.R;
@@ -21,6 +23,7 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
     public AddAlarmPresenter() {
         alarm = new Alarm();
     }
+
     // TODO
     @Override
     public void saveAlarm() {
@@ -32,11 +35,12 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
 
         //zapisanie ich w alarmie
         //pobranie alarmu
-        setAlarmClock();
+        //setAlarmClock();
         //procente czy czas
-        getRadioButtonValue();
+        //getRadioButtonValue();
         //pobrane wartości procentów lub czasu
         //pobranie dźwięku alarm
+        int percent = view.getCheckedPercentOrTimeId();
     }
 
     // TODO - NIE MAM SIĘ ODNOSIC DO HOUR MINUTE ITP. TYLKO DO AKTYWNOSCI I WYWOLYWAC ODPOWIEDNIE METODY
@@ -104,7 +108,7 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
     // TODO W ZALEŻNOSCI CO KLIKNIE TO AKTYWUJE LUB ZMIENIA WARTOSC DOMYSLNA W OKNIE
     @Override
     public void onRadioButtonClicked() {
-        radioButtonId = view.getCheckedRadioButtonId();
+        //radioButtonId = view.getCheckedRadioButtonId();
         //dodania odpowiednich konfiguracji to EditText - jak procenty to tylko wartości od 0 do 100, a jak czas to czas w minutach
     }
 

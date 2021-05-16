@@ -7,7 +7,7 @@ public interface AddAlarmContractMVP {
         String getHour();
         String getMinute();
         String getPercentOrTimeValue();
-        int getCheckedRadioButtonId();
+        int getCheckedPercentOrTimeId();
 
         void showHour(String hour);
         void showMinute(String minute);
