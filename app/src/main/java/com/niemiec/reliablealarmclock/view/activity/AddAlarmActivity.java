@@ -152,19 +152,35 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @OnClick({R.id.day_1_button, R.id.day_2_button, R.id.day_3_button, R.id.day_4_button,
         R.id.day_5_button, R.id.day_6_button, R.id.day_7_button})
     public void dayButtonClick(View view) {
-        Toast.makeText(getApplicationContext(), "Test " + day1.isChecked(), Toast.LENGTH_LONG).show();
-        if (view.getId() == R.id.day_1_button) {
-            if (day1.isChecked()) {
-                day1.setChecked(true);
-            } else {
-                day1.setChecked(false);
-            }
-            Toast.makeText(getApplicationContext(), "Test " + day1.isChecked(), Toast.LENGTH_SHORT).show();
+        switch (view.getId()) {
+            case R.id.day_1_button: setDayChecked(day1);
+            case R.id.day_2_button: setDayChecked(day2);
+            case R.id.day_3_button: setDayChecked(day3);
+            case R.id.day_4_button: setDayChecked(day4);
+            case R.id.day_5_button: setDayChecked(day5);
+            case R.id.day_6_button: setDayChecked(day6);
+            case R.id.day_7_button: setDayChecked(day7);
+        }
+
+        String check = day1.isChecked() + " " + day2.isChecked() + " " +
+                day3.isChecked() + " " + day4.isChecked() + " " +
+                day5.isChecked() + " " + day6.isChecked() + " " +
+                day7.isChecked() + " ";
+        Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
+    }
+
+    private void setDayChecked(MaterialButton day) {
+        if (day.isChecked()) {
+            day.setChecked(true);
+        } else {
+            day.setChecked(false);
         }
     }
 
+    //TODO
     @OnClick({R.id.nothing_choice_button, R.id.percent_choice_button, R.id.time_choice_button})
     public void onPercentOrTimeRadioGroupClick(View view) {
+        //TODO jeżeli nothing kliknięte to ukrywamy wprowadzanie wartości
         if (view.getId() == R.id.nothing_choice_button) {
                 nothingChoiceButton.setChecked(true);
                 percentChoiceButton.setChecked(false);
@@ -195,8 +211,6 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         addAlarmPresenter.saveAlarm();
     }
 
-
-
     @Override
     public String getHour() {
         return hour.getText().toString();
@@ -212,20 +226,15 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         return percentOrTime.getText().toString();
     }
 
-    //TODO
     @Override
     public int getCheckedPercentOrTimeId() {
         if (nothingChoiceButton.isChecked()) {
-            Toast.makeText(getApplicationContext(), "nothing", Toast.LENGTH_SHORT).show();
             return R.id.nothing_choice_button;
         } else if (percentChoiceButton.isChecked()) {
-            Toast.makeText(getApplicationContext(), "percent", Toast.LENGTH_SHORT).show();
             return R.id.percent_choice_button;
         } else if (timeChoiceButton.isChecked()) {
-            Toast.makeText(getApplicationContext(), "time", Toast.LENGTH_SHORT).show();
             return R.id.time_choice_button;
         }
-
         return 0;
     }
 
