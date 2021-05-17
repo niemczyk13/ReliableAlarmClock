@@ -107,9 +107,22 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
 
     // TODO W ZALEŻNOSCI CO KLIKNIE TO AKTYWUJE LUB ZMIENIA WARTOSC DOMYSLNA W OKNIE
     @Override
-    public void onRadioButtonClicked() {
+    public void onPercentOrTimeRadioGroupClick(int id) {
         //radioButtonId = view.getCheckedRadioButtonId();
         //dodania odpowiednich konfiguracji to EditText - jak procenty to tylko wartości od 0 do 100, a jak czas to czas w minutach
+        if (id == R.id.nothing_choice_button) {
+            //TODO jeżeli nothing kliknięte to ukrywamy wprowadzanie wartości
+            view.hidePercentOrTimeEditText(false);
+            view.setPercentOrTimeGroupCheck(true, false, false);
+        }
+        if (id == R.id.percent_choice_button) {
+            view.hidePercentOrTimeEditText(true);
+            view.setPercentOrTimeGroupCheck(false, true, false);
+        }
+        if (id == R.id.time_choice_button) {
+            view.hidePercentOrTimeEditText(true);
+            view.setPercentOrTimeGroupCheck(false, false, true);
+        }
     }
 
 

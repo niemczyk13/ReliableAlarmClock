@@ -23,14 +23,15 @@ public interface AddAlarmContractMVP {
         void setRisingVolume(boolean risingVolume);
         void selectHour();
         void selectMinute();
-
+        void setPercentOrTimeGroupCheck(boolean nothing, boolean percent, boolean time);
+        void hidePercentOrTimeEditText(boolean hide);
         void transferActivityToMinutes();
         void selectAllMinute();
     }
 
      interface Presenter {
         void saveAlarm();
-        void onRadioButtonClicked();
+        void onPercentOrTimeRadioGroupClick(int id);
         void checkTheCorrectnessOfTheEnteredHour();
         void hourFocusChange(boolean hasFocus);
         void checkTheCorrectnessOfTheEnteredMinute();

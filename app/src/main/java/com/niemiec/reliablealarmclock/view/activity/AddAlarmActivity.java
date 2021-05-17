@@ -177,27 +177,14 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         }
     }
 
-    //TODO
     @OnClick({R.id.nothing_choice_button, R.id.percent_choice_button, R.id.time_choice_button})
     public void onPercentOrTimeRadioGroupClick(View view) {
-        //TODO jeżeli nothing kliknięte to ukrywamy wprowadzanie wartości
-        if (view.getId() == R.id.nothing_choice_button) {
-                nothingChoiceButton.setChecked(true);
-                percentChoiceButton.setChecked(false);
-                timeChoiceButton.setChecked(false);
-        }
-        if (view.getId() == R.id.percent_choice_button) {
-                percentChoiceButton.setChecked(true);
-                nothingChoiceButton.setChecked(false);
-                timeChoiceButton.setChecked(false);
-        }
-        if (view.getId() == R.id.time_choice_button) {
-                timeChoiceButton.setChecked(true);
-                nothingChoiceButton.setChecked(false);
-                percentChoiceButton.setChecked(false);
-        }
+        addAlarmPresenter.onPercentOrTimeRadioGroupClick(view.getId());
+    }
 
-        addAlarmPresenter.onRadioButtonClicked();
+    @OnClick(R.id.rising_volume_switch)
+    public void risingVolumeSwitchClick(View view) {
+        risingVolumeText.setEnabled(risingVolumeSwitch.isEnabled());
     }
 
     @OnClick(R.id.cancel_button)
@@ -235,7 +222,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         } else if (timeChoiceButton.isChecked()) {
             return R.id.time_choice_button;
         }
-        return 0;
+        return R.id.percent_choice_button;
     }
 
     @Override
@@ -319,6 +306,19 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     public void selectMinute() {
         minute.selectAll();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+    }
+
+    @Override
+    public void setPercentOrTimeGroupCheck(boolean nothing, boolean percent, boolean time) {
+        nothingChoiceButton.setChecked(nothing);
+        percentChoiceButton.setChecked(percent);
+        timeChoiceButton.setChecked(time);
+    }
+
+    //TODO DO PRZEROBIENIA NA UKRYWANIE A NIE DEZAKTYWOWANIE
+    @Override
+    public void hidePercentOrTimeEditText(boolean hide) {
+        percentOrTime.setEnabled(hide);
     }
 
 
