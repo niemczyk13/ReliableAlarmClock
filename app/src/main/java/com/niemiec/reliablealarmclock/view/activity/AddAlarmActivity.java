@@ -1,6 +1,8 @@
 package com.niemiec.reliablealarmclock.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,6 +28,7 @@ import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
 import com.niemiec.reliablealarmclock.R;
 import com.niemiec.reliablealarmclock.add.alarm.AddAlarmPresenter;
 import com.niemiec.reliablealarmclock.data.OnOffValues;
+import com.niemiec.reliablealarmclock.view.fragment.dialog.CalendarDialogFragment;
 
 public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContractMVP.View {
 
@@ -146,6 +149,9 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     //TODO
     @OnClick(R.id.calendar_image_button )
     public void calendarImageButtonClick(View view) {
+        CalendarDialogFragment calendar = CalendarDialogFragment.newInstance();
+        FragmentManager manager = getSupportFragmentManager();
+        calendar.show(manager, "fragment_calendar");
     }
 
     //TODO
