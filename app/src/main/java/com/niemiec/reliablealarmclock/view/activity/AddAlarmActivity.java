@@ -1,12 +1,14 @@
 package com.niemiec.reliablealarmclock.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -30,7 +33,10 @@ import com.niemiec.reliablealarmclock.add.alarm.AddAlarmPresenter;
 import com.niemiec.reliablealarmclock.data.OnOffValues;
 import com.niemiec.reliablealarmclock.view.fragment.dialog.CalendarDialogFragment;
 
-public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContractMVP.View {
+import java.text.DateFormat;
+import java.util.Calendar;
+
+public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContractMVP.View, DatePickerDialog.OnDateSetListener {
 
     private AddAlarmPresenter addAlarmPresenter;
 
@@ -149,9 +155,24 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     //TODO
     @OnClick(R.id.calendar_image_button )
     public void calendarImageButtonClick(View view) {
+        DialogFragment datePicker = new CalendarDialogFragment();
+        datePicker.show(getSupportFragmentManager(), "date");
+         /*
         CalendarDialogFragment calendar = CalendarDialogFragment.newInstance();
         FragmentManager manager = getSupportFragmentManager();
         calendar.show(manager, "fragment_calendar");
+
+         */
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int mont, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, mont);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        String currentDateString = DateFormat.getDateInstance().format(calendar.getTime());
+        Toast.makeText(getApplicationContext(), currentDateString, Toast.LENGTH_SHORT);
     }
 
     //TODO
