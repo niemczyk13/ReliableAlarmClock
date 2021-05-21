@@ -43,6 +43,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @BindView(R.id.hour_edit_text) EditText hour;
     @BindView(R.id.minute_edit_text) EditText minute;
     @BindView(R.id.calendar_image_button) ImageButton calendar;
+    private Calendar date = null;
 
     @BindView(R.id.day_1_button) MaterialButton day1;
     @BindView(R.id.day_2_button) MaterialButton day2;
@@ -156,23 +157,31 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @OnClick(R.id.calendar_image_button )
     public void calendarImageButtonClick(View view) {
         DialogFragment datePicker = new CalendarDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("hour", hour.getText().toString());
+        bundle.putString("minute", minute.getText().toString());
+        datePicker.setArguments(bundle);
         datePicker.show(getSupportFragmentManager(), "date");
-         /*
-        CalendarDialogFragment calendar = CalendarDialogFragment.newInstance();
-        FragmentManager manager = getSupportFragmentManager();
-        calendar.show(manager, "fragment_calendar");
-
-         */
     }
 
     @Override
-    public void onDateSet(DatePicker datePicker, int year, int mont, int day) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, mont);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-        String currentDateString = DateFormat.getDateInstance().format(calendar.getTime());
-        Toast.makeText(getApplicationContext(), currentDateString, Toast.LENGTH_SHORT);
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+        //TODO jeżeli kliknięte to dodatkowo odznaczamy wszystkie dni z harmonogramu
+        uncheckAllDays();
+        date = Calendar.getInstance();
+        date.set(Calendar.YEAR, year);
+        date.set(Calendar.MONTH, month);
+        date.set(Calendar.DAY_OF_MONTH, day);
+    }
+
+    private void uncheckAllDays() {
+        day1.setChecked(false);
+        day2.setChecked(false);
+        day3.setChecked(false);
+        day4.setChecked(false);
+        day5.setChecked(false);
+        day6.setChecked(false);
+        day7.setChecked(false);
     }
 
     //TODO
@@ -199,8 +208,10 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     private void setDayChecked(MaterialButton day) {
         if (day.isChecked()) {
             day.setChecked(true);
+            date = null;
         } else {
             day.setChecked(false);
+            date = Calendar.getInstance();
         }
     }
 
