@@ -167,12 +167,14 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         //TODO jeżeli kliknięte to dodatkowo odznaczamy wszystkie dni z harmonogramu
+        //TODO Zmiana wyglądu przycisków
         uncheckAllDays();
         date = Calendar.getInstance();
         date.set(Calendar.YEAR, year);
         date.set(Calendar.MONTH, month);
         date.set(Calendar.DAY_OF_MONTH, day);
     }
+
 
     private void uncheckAllDays() {
         day1.setChecked(false);
@@ -205,6 +207,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         Toast.makeText(getApplicationContext(), check, Toast.LENGTH_SHORT).show();
     }
 
+    //TODO ZMIANA WYGLĄDU PRZYCISKU PO WCISNIĘCIU
     private void setDayChecked(MaterialButton day) {
         if (day.isChecked()) {
             day.setChecked(true);
