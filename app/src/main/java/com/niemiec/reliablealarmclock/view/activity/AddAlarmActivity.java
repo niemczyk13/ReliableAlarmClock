@@ -2,8 +2,6 @@ package com.niemiec.reliablealarmclock.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -19,8 +17,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -30,10 +26,8 @@ import com.google.android.material.button.MaterialButton;
 import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
 import com.niemiec.reliablealarmclock.R;
 import com.niemiec.reliablealarmclock.add.alarm.AddAlarmPresenter;
-import com.niemiec.reliablealarmclock.data.OnOffValues;
 import com.niemiec.reliablealarmclock.view.fragment.dialog.CalendarDialogFragment;
 
-import java.text.DateFormat;
 import java.util.Calendar;
 
 public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContractMVP.View, DatePickerDialog.OnDateSetListener {

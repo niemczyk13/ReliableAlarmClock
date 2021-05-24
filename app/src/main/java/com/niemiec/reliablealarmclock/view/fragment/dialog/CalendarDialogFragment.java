@@ -24,6 +24,7 @@ public class CalendarDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Calendar calendar = Calendar.getInstance();
+
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -32,8 +33,13 @@ public class CalendarDialogFragment extends DialogFragment {
 
         String hour = getArguments().getString("hour");
         String minute = getArguments().getString("minute");
-        int timeToShift = CalendarMinDateValidator.calculateTheOffsetForTheSelectedTime(hour, minute);
+        String actualHour = ActualTime.getActualHour();
+        String actualMinute = ActualTime.getActualMinute();
+
+        int timeToShift = CalendarMinDateValidator.calculateTheOffsetForTheSelectedTime(hour, minute, actualHour, actualMinute);
+
         dpd.getDatePicker().setMinDate(System.currentTimeMillis() + timeToShift);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             dpd.getDatePicker().setFirstDayOfWeek(Calendar.MONDAY);
         }

@@ -1,19 +1,9 @@
 package com.niemiec.reliablealarmclock;
 
-import android.os.Bundle;
-import android.system.Os;
-
-import com.niemiec.reliablealarmclock.add.alarm.ActualTime;
-import com.niemiec.reliablealarmclock.view.fragment.dialog.CalendarDialogFragment;
 import com.niemiec.reliablealarmclock.view.fragment.dialog.CalendarMinDateValidator;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.fragment.app.DialogFragment;
-
-
 
 public class CalendarMinDateValidatorTest {
 
@@ -23,9 +13,15 @@ public class CalendarMinDateValidatorTest {
         int today = -1000;
 
 
-        ActualTime actualTime ;
+        String actualH = "21";
+        String actualM = "31";
 
-        //Assert.assertEquals(tomorrow, CalendarMinDateValidator.);
+        Assert.assertEquals(tomorrow, CalendarMinDateValidator.calculateTheOffsetForTheSelectedTime("21", "31", actualH, actualM));
+        Assert.assertEquals(tomorrow, CalendarMinDateValidator.calculateTheOffsetForTheSelectedTime("01", "00", actualH, actualM));
+        Assert.assertEquals(tomorrow, CalendarMinDateValidator.calculateTheOffsetForTheSelectedTime("00", "00", actualH, actualM));
+        Assert.assertEquals(today, CalendarMinDateValidator.calculateTheOffsetForTheSelectedTime("23", "59", actualH, actualM));
+        Assert.assertEquals(today, CalendarMinDateValidator.calculateTheOffsetForTheSelectedTime("21", "32", actualH, actualM));
+
     }
 
 

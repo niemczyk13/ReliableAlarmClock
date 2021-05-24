@@ -4,21 +4,22 @@ import java.sql.Time;
 
 public class Alarm {
     private Long id;
+    private String name;
     private AlarmDateTime alarmDateTime;
-    private int batteryPrecentage;
+    private int batteryPercentage;
     private Time timeToDischarge;
     private boolean vibration;
     private Volume volume;
     private IncreaseVolume increaseVolume;
-    boolean active;
+    private boolean active;
 
     /*
     Long getId();
     void setId(Long id);
     Object getAlarmClock();
     void setAlarmClock(Object alarmClock);
-    int getBatteryPrecentage();
-    void setBatteryPrecentage(int batteryPrecentage);
+    int getBatteryPercentage();
+    void setBatteryPercentage(int batteryPercentage);
     Object getTimeToDischarge();
     void setTimeToDischarge(Object timeToDischarge);
     boolean getActivated();
