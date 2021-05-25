@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.niemiec.reliablealarmclock.R;
-import com.niemiec.reliablealarmclock.view.activity.AddAlarmActivity;
+import com.niemiec.reliablealarmclock.view.activity.addAlarm.AddAlarmActivity;
 
 public class MainActivity extends AppCompatActivity {
 

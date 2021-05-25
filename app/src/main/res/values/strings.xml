@@ -17,4 +17,6 @@
     <string name="vibration_text_view">Wibracja</string>
     <string name="rising_sound_text_view">Narastający dźwięk</string>
     <string name="alarm_sound">Dźwięk alarmu</string>
+    <string name="add_new_sound">Dodaj alarm</string>
+    <string name="application_sounds">Dźwięki aplikacji</string>
 </resources>

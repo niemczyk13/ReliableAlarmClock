@@ -1,6 +1,5 @@
-package com.niemiec.reliablealarmclock;
+package com.niemiec.reliablealarmclock.view.activity.addAlarm;
 
-import java.time.LocalDateTime;
 
 public interface AddAlarmContractMVP {
     interface View {

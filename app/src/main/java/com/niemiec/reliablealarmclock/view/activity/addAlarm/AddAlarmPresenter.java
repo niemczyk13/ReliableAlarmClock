@@ -1,10 +1,8 @@
-package com.niemiec.reliablealarmclock.add.alarm;
+package com.niemiec.reliablealarmclock.view.activity.addAlarm;
 
-import android.widget.Toast;
-
-import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
-import com.niemiec.reliablealarmclock.BasePresenter;
+import com.niemiec.reliablealarmclock.view.activity.BasePresenter;
 import com.niemiec.reliablealarmclock.R;
+import com.niemiec.reliablealarmclock.add.alarm.ActualTime;
 import com.niemiec.reliablealarmclock.data.DefaultStringValues;
 import com.niemiec.reliablealarmclock.data.DefaultValues;
 import com.niemiec.reliablealarmclock.data.DefaultSwitchValues;

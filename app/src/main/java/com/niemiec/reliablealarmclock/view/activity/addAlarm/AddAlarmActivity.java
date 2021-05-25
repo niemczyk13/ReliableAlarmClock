@@ -1,4 +1,4 @@
-package com.niemiec.reliablealarmclock.view.activity;
+package com.niemiec.reliablealarmclock.view.activity.addAlarm;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -23,9 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
-import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
 import com.niemiec.reliablealarmclock.R;
-import com.niemiec.reliablealarmclock.add.alarm.AddAlarmPresenter;
+import com.niemiec.reliablealarmclock.view.activity.MainActivity;
+import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.SelectSoundActivity;
 import com.niemiec.reliablealarmclock.view.fragment.dialog.CalendarDialogFragment;
 
 import java.util.Calendar;
@@ -70,7 +70,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         setContentView(R.layout.activity_add_alarm);
         ButterKnife.bind(this);
 
-        createAddAlarmManager();
+        createAddAlarmPresenter();
         setDefaultValues();
         activatedHourEditText();
         addHourViewTextChangedListener();
@@ -80,7 +80,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     }
 
     //OK!
-    private void createAddAlarmManager() {
+    private void createAddAlarmPresenter() {
         addAlarmPresenter = new AddAlarmPresenter();
         addAlarmPresenter.attach(this);
     }
@@ -215,6 +215,12 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @OnClick({R.id.nothing_choice_button, R.id.percent_choice_button, R.id.time_choice_button})
     public void onPercentOrTimeRadioGroupClick(View view) {
         addAlarmPresenter.onPercentOrTimeRadioGroupClick(view.getId());
+    }
+
+    @OnClick({R.id.sound_path_title_text_view, R.id.sound_path_text_view})
+    public void onSelectSoundClick(View view) {
+        Intent intent = new Intent(this, SelectSoundActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.rising_volume_switch)

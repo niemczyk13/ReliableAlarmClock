@@ -1,4 +1,4 @@
-package com.niemiec.reliablealarmclock;
+package com.niemiec.reliablealarmclock.view.activity;
 
 public abstract class BasePresenter<T> {
     public T view;

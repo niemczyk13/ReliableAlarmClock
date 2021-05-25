@@ -1,10 +1,5 @@
 package com.niemiec.reliablealarmclock.validator;
 
-import android.widget.Toast;
-
-import com.niemiec.reliablealarmclock.AddAlarmContractMVP;
-import com.niemiec.reliablealarmclock.view.activity.AddAlarmActivity;
-
 public class HourValidator {
 
     public static String checkTheCorrectnessOfTheEnteredHour(String hour) {
