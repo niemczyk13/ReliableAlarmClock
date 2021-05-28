@@ -21,17 +21,15 @@
         android:text="@string/application_sounds"
         app:layout_constraintTop_toBottomOf="@+id/add_new_sound_text_view"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/application_sounds_text_view"
-        app:layout_constraintLeft_toLeftOf="parent">
+        />W
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </ScrollView>
+    <ListView
+        android:id="@+id/file_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/application_sounds_text_view"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
