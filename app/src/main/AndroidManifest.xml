@@ -9,10 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReliableAlarmClock">
-        <activity
-            android:name=".view.activity.addAlarm.sound.file.MySoundsActivity"
-            android:label="@string/title_activity_my_sounds"
-            android:theme="@style/Theme.ReliableAlarmClock.NoActionBar"></activity>
+        <activity android:name=".view.activity.addAlarm.sound.file.MySoundsActivity"/>
         <activity android:name=".view.activity.addAlarm.sound.SelectSoundActivity" />
         <activity android:name=".view.activity.addAlarm.AddAlarmActivity" />
         <activity android:name=".view.activity.MainActivity">
