@@ -58,7 +58,7 @@ public class MySoundsActivity extends AppCompatActivity implements MySoundsContr
 
         List values = new ArrayList();
         File dir = new File(p);
-        File[] files = dir.listFiles();
+        File[] files33 = dir.listFiles();
 
         if (!dir.canRead()) {
             setTitle(getTitle() + " (inaccessible)");
@@ -72,7 +72,7 @@ public class MySoundsActivity extends AppCompatActivity implements MySoundsContr
             }
         }
 
-        File file = files[8];
+        File file = files33[8];
         File[] files2 = file.listFiles();
 
         Collections.sort(values);
@@ -92,17 +92,45 @@ public class MySoundsActivity extends AppCompatActivity implements MySoundsContr
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         File directory = cw.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
 
-
+        getFiles(files33);
 
         System.out.println("Sciezka " + dir.getName() + " " + dir.getAbsolutePath());
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_2, android.R.id.text1, values);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_2, android.R.id.text1, files);
         filesListView.setAdapter(adapter);
     }
 
-    private boolean getFiles(File[] f) {
+    private void getFiles(File[] f) {
+        List<File> dir = new ArrayList<>();
+        List<File> fil = new ArrayList<>();
 
+        System.out.println("JESTEM TU!!!!!!!!!!!!!!! " + files.size());
+        if (f.length != 0) {
 
-        return true;
+            for (File ff : f) {
+                int index = ff.getAbsolutePath().lastIndexOf(".");
+                String filePath = ff.getAbsolutePath();
+                if (ff.isDirectory()) {
+                    dir.add(ff);
+                } else {
+                    if (filePath.substring(index).equalsIgnoreCase(".mp3")) {
+                        files.add(ff);
+                    }
+                    fil.add(ff);
+                }
+            }
+            if (!dir.isEmpty()) {
+                File[] abc = new File[dir.size()];
+
+                getFiles(dir.toArray(abc));
+            }
+
+            for (File a : files) {
+                System.out.print(a.getName() + ", ");
+            }
+            System.out.println();
+        }
+        System.out.println("JESTEM TU!");
+
     }
 
     @Override
