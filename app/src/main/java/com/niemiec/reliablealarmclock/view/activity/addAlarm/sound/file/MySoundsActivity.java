@@ -1,7 +1,6 @@
 package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file;
 
-import android.content.ContextWrapper;
-import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,27 +8,26 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.niemiec.reliablealarmclock.R;
-import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.aadapter.FileListAdapter;
+import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter.FileListAdapter;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class MySoundsActivity extends AppCompatActivity implements MySoundsContractMVP.View {
+
+    private Cursor cursor;
 
     private ActionBar actionBar;
     private MySoundPresenter presenter;
@@ -51,9 +49,15 @@ public class MySoundsActivity extends AppCompatActivity implements MySoundsContr
         addBackArrow();
         createMySoundsPresenter();
 
-        showFirstFileManagerList();
+        showMusicList();
+
+        //showFirstFileManagerList();
+        cursor = managedQuery(null, null, null, null, null);
 
 
+    }
+
+    private void showMusicList() {
 
     }
 
@@ -74,6 +78,11 @@ public class MySoundsActivity extends AppCompatActivity implements MySoundsContr
 
         Arrays.sort(filesArray);
 
+        cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
+
+        cursor.moveToFirst();
+        System.out.println("CURSOR COLUMN: " + cursor.toString());
+
         for (int i = 0; i < filesArray.length; i++) {
             File f = filesArray[i];
 
@@ -82,6 +91,7 @@ public class MySoundsActivity extends AppCompatActivity implements MySoundsContr
                 paths.add(f.getPath());
 
             } else {
+                //filtr czy plik dźwiękowy
                 files.add(f.getName());
                 filesPath.add(f.getPath());
             }

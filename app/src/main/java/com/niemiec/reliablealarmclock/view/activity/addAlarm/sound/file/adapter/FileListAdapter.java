@@ -1,6 +1,7 @@
-package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.aadapter;
+package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,11 @@ import com.niemiec.reliablealarmclock.R;
 import java.io.File;
 import java.util.List;
 
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+
+import static android.provider.BaseColumns._ID;
+import static android.provider.MediaStore.MediaColumns.TITLE;
+import static android.provider.MediaStore.Video.VideoColumns.ARTIST;
 
 public class FileListAdapter extends BaseAdapter {
     private List<String> item;
@@ -55,6 +60,7 @@ public class FileListAdapter extends BaseAdapter {
 
             viewHolder.icon = view.findViewById(R.id.icon_image_view);
             viewHolder.fileName = view.findViewById(R.id.file_name_text_view);
+     //       viewHolder.play = view.findViewById(R.id.play_image_button);
 
             view.setTag(viewHolder);
 
@@ -64,10 +70,20 @@ public class FileListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.fileName.setText(item.get(position));
         viewHolder.icon.setImageResource(setFileImageType(new File(path.get(position))));
+        viewHolder.fileName.setText(item.get(position));
+   //     viewHolder.play.setImageResource(setPlayImage(new File(path.get(position))));
 
         return view;
+    }
+
+    private int setPlayImage(File file) {
+        //patrzymy czy plik i dajem znak play
+        if (!file.isDirectory()) {
+            return R.drawable.ic_baseline_play_circle_outline_24;
+        } else {
+            return 0;
+        }
     }
 
     private int setFileImageType(File file) {
@@ -84,5 +100,6 @@ public class FileListAdapter extends BaseAdapter {
     class ViewHolder {
         ImageView icon;
         TextView fileName;
+     //   ImageButton play;
     }
 }
