@@ -58,6 +58,8 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
 
         showMusicList();
 
+
+
         //showFirstFileManagerList();
 
     }
@@ -65,6 +67,11 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
     private void showMusicList() {
         getSupportLoaderManager().initLoader(1, null, this);
         //LoaderManager.getInstance(this).initLoader(0, null, null);
+
+        filesListView.setOnItemClickListener((adapterView, view, position, id) -> {
+            Toast.makeText(MySoundsActivity.this, "TEKST!", Toast.LENGTH_SHORT).show();
+            System.out.println("TEKST!");
+        });
     }
 
     private void showFirstFileManagerList() {
@@ -215,6 +222,7 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
         cursor.moveToFirst();
         MLadapter = new MusicListAdapter(this, cursor);
         filesListView.setAdapter(MLadapter);
+
 
     }
 
