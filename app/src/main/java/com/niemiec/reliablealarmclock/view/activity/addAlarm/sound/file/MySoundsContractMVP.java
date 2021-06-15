@@ -1,4 +1,4 @@
-package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file;
+    package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file;
 
 public interface MySoundsContractMVP {
     interface View {

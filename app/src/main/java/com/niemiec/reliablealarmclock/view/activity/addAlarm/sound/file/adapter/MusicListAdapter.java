@@ -2,20 +2,15 @@ package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter
 
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.BaseColumns;
 import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.niemiec.reliablealarmclock.R;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -53,7 +48,7 @@ public class MusicListAdapter extends BaseAdapter {
         cursor.moveToPosition(position);
 
         if (view == null) {
-            view = inflater.inflate(R.layout.musi_list_row, parent, false);
+            view = inflater.inflate(R.layout.music_list_row, parent, false);
             viewHolder = new ViewHolder();
 
             viewHolder.title = view.findViewById(R.id.title_text_view);
