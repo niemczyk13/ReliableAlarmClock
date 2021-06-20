@@ -7,10 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.niemiec.reliablealarmclock.R;
+import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MySoundsActivity;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -49,12 +53,7 @@ public class MusicListAdapter extends BaseAdapter {
 
         if (view == null) {
             view = inflater.inflate(R.layout.music_list_row, parent, false);
-            viewHolder = new ViewHolder();
-
-            viewHolder.title = view.findViewById(R.id.title_text_view);
-            viewHolder.author = view.findViewById(R.id.author_text_view);
-            viewHolder.playButton = view.findViewById(R.id.play_image_button);
-
+            viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -65,9 +64,20 @@ public class MusicListAdapter extends BaseAdapter {
         viewHolder.author.setText(getAuthor());
         viewHolder.title.setText(cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.TITLE)));
         viewHolder.playButton.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
-        //viewHolder.icon.setImageResource(R.drawable.ic_baseline_music_note_24);
-        //viewHolder.fileName.setText(cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)));
-        //System.out.println(cursor.getColumnName(2));
+
+        GridLayout vv = (GridLayout) parent.getChildAt(0);
+        System.out.println("Child cound: " + parent.getChildCount());
+
+        GridLayout v = view.findViewById(R.id.sounds_list_view);
+        if (vv != null) {
+            vv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(context, "TEKST22222!", Toast.LENGTH_SHORT).show();
+                    System.out.println("TEKST22222!");
+                }
+            });
+        }
 
         return view;
     }
@@ -84,5 +94,11 @@ public class MusicListAdapter extends BaseAdapter {
         TextView title;
         TextView author;
         ImageButton playButton;
+
+        public ViewHolder(View view) {
+            title = view.findViewById(R.id.title_text_view);
+            author = view.findViewById(R.id.author_text_view);
+            playButton = view.findViewById(R.id.play_image_button);
+        }
     }
 }
