@@ -50,10 +50,25 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
         getSupportLoaderManager().initLoader(1, null, this);
         //LoaderManager.getInstance(this).initLoader(0, null, null);
 
+        /*
         filesListView.setOnItemClickListener((AdapterView<?> adapterView, View view, int position, long id) -> {
             Toast.makeText(MySoundsActivity.this, "TEKST!", Toast.LENGTH_SHORT).show();
             System.out.println("TEKST!");
         });
+
+         */
+
+        /*
+        filesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MySoundsActivity.this, "TEKST22222AAAAA!", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+         */
     }
 
     private void createMySoundsPresenter() {

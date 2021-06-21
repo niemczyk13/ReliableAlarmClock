@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.niemiec.reliablealarmclock.R;
+import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MyFileActivity;
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MySoundsActivity;
 
 import java.io.File;

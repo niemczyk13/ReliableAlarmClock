@@ -49,7 +49,7 @@ public class MyFileActivity extends AppCompatActivity implements MySoundsContrac
         createMySoundsPresenter();
 
 
-        //showFirstFileManagerList();
+        showFirstFileManagerList();
 
     }
 
