@@ -29,6 +29,8 @@ public class MusicListAdapter extends BaseAdapter {
     private Cursor cursor;
     private Context context;
     private LayoutInflater inflater;
+    private MediaPlayer mediaPlayer;
+    private boolean isPlay;
 
     public MusicListAdapter(Context context, Cursor cursor) {
         this.context = context;
@@ -82,15 +84,13 @@ public class MusicListAdapter extends BaseAdapter {
                 int position = lv.getPositionForView(gl);
                 cursor.moveToPosition(position);
                 System.out.println("Position: " + position);
-                Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, position);
-                MediaPlayer mediaPlayer = new MediaPlayer();
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                try {
-                    mediaPlayer.setDataSource(context, uri);
-                    mediaPlayer.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, position);
+                Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
+                System.out.println("URI: " + uri);
+                mediaPlayer = MediaPlayer.create(context, uri);
+                //mediaPlayer.setDataSource(context, uri);
+                //mediaPlayer.prepareAsync();
+                mediaPlayer.start();
 
                 //Toast.makeText(context, "Przycisk " + name, Toast.LENGTH_SHORT).show();
             }
@@ -98,8 +98,6 @@ public class MusicListAdapter extends BaseAdapter {
 
         ListView v = (ListView) parent;
 
-
-        ViewHolder finalViewHolder = viewHolder;
         v.setOnItemClickListener((adapterView, view1, i, l) -> {
             cursor.moveToPosition(i);
             String name = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.TITLE));
@@ -114,6 +112,10 @@ public class MusicListAdapter extends BaseAdapter {
 
 
         return view;
+    }
+
+    public void onPrepared(MediaPlayer player) {
+        player.start();
     }
 
     private String getAuthor() {

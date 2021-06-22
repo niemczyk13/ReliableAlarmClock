@@ -1,6 +1,8 @@
 package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file;
 
 import android.database.Cursor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,7 +29,7 @@ import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter.
 public class MySoundsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, MySoundsContractMVP.View {
 
     private MusicListAdapter adapter;
-
+    private MediaPlayer mediaPlayer;
     private ActionBar actionBar;
     private MySoundPresenter presenter;
 
@@ -92,6 +94,9 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
+        //mediaPlayer = new MediaPlayer();
+        //mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
         adapter = new MusicListAdapter(this, cursor);
         filesListView.setAdapter(adapter);
     }
