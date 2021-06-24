@@ -1,5 +1,6 @@
 package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file;
 
+import android.content.ContentUris;
 import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -19,6 +20,8 @@ import butterknife.ButterKnife;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +37,8 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
 
     @BindView(R.id.sounds_list_view)
     ListView filesListView;
+
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,25 +56,18 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
         getSupportLoaderManager().initLoader(1, null, this);
         //LoaderManager.getInstance(this).initLoader(0, null, null);
 
-        /*
+
         filesListView.setOnItemClickListener((AdapterView<?> adapterView, View view, int position, long id) -> {
-            Toast.makeText(MySoundsActivity.this, "TEKST!", Toast.LENGTH_SHORT).show();
-            System.out.println("TEKST!");
+            cursor.moveToPosition(position);
+            Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
+
+
+            Toast.makeText(MySoundsActivity.this, "URI: " + uri.toString(), Toast.LENGTH_SHORT).show();
         });
 
-         */
-
-        /*
-        filesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(MySoundsActivity.this, "TEKST22222AAAAA!", Toast.LENGTH_SHORT).show();
 
 
-            }
-        });
 
-         */
     }
 
     private void createMySoundsPresenter() {
@@ -93,6 +91,7 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
+        this.cursor = cursor;
         adapter = new MusicListAdapter(this, cursor);
         filesListView.setAdapter(adapter);
     }

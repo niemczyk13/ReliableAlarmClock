@@ -1,20 +1,14 @@
 package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.niemiec.reliablealarmclock.R;
 
@@ -24,16 +18,13 @@ public class MusicListAdapter extends BaseAdapter {
     private Cursor cursor;
     private Context context;
     private LayoutInflater inflater;
-
-    private MediaPlayer mediaPlayer;
-    private boolean playing = false;
-    private int playingSoundPosition;
-    private ImageButton playingImageButton;
+    private PlayButtonManager playButtonManager;
 
     public MusicListAdapter(Context context, Cursor cursor) {
         this.context = context;
         this.cursor = cursor;
         inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        playButtonManager = new PlayButtonManager(context, cursor);
     }
 
     @Override
@@ -42,16 +33,10 @@ public class MusicListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
-        cursor.moveToPosition(i);
-
-        return cursor;
-    }
+    public Object getItem(int i) { return null; }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    public long getItemId(int position) { return position; }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -68,69 +53,21 @@ public class MusicListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        //TUTAJ SETTEXT DOBRZE ZROBIC
+        setValuesInViewHolder(viewHolder);
 
+        return view;
+    }
+
+    private void setValuesInViewHolder(ViewHolder viewHolder) {
         viewHolder.author.setText(getAuthor());
         viewHolder.title.setText(cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.TITLE)));
         viewHolder.playButton.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
         viewHolder.playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GridLayout gl = (GridLayout) view.getParent();
-                ListView lv = (ListView) gl.getParent();
-                ImageButton imageButton = (ImageButton) view;
-
-                int position = lv.getPositionForView(gl);
-                cursor.moveToPosition(position);
-                Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
-
-                if (playing) {
-                    playingImageButton.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
-                    mediaPlayer.stop();
-                    cursor.moveToPosition(playingSoundPosition);
-                    playing = false;
-                    if (playingSoundPosition != position) {
-                        imageButton.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
-
-                        playingImageButton = imageButton;
-                        playingSoundPosition = position;
-                        mediaPlayer = MediaPlayer.create(context, uri);
-                        mediaPlayer.start();
-                        playing = true;
-                    }
-                } else {
-                    imageButton.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
-                    playingImageButton = imageButton;
-                    playingSoundPosition = position;
-                    mediaPlayer = MediaPlayer.create(context, uri);
-                    mediaPlayer.start();
-                    playing = true;
-                }
-
-
+                playButtonManager.onClick(view);
             }
         });
-
-        ListView v = (ListView) parent;
-
-        v.setOnItemClickListener((adapterView, view1, i, l) -> {
-            cursor.moveToPosition(i);
-            String name = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.TITLE));
-            Toast.makeText(context, name, Toast.LENGTH_SHORT).show();
-
-
-        });
-
-
-
-
-
-
-        return view;
-    }
-
-    public void onPrepared(MediaPlayer player) {
-        player.start();
     }
 
     private String getAuthor() {
