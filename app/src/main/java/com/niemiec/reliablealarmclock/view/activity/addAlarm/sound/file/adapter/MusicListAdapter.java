@@ -3,11 +3,9 @@ package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.provider.SettingsSlicesContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.niemiec.reliablealarmclock.R;
-import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MySoundsActivity;
-
-import java.io.IOException;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -29,8 +24,11 @@ public class MusicListAdapter extends BaseAdapter {
     private Cursor cursor;
     private Context context;
     private LayoutInflater inflater;
+
     private MediaPlayer mediaPlayer;
-    private boolean isPlay;
+    private boolean playing = false;
+    private int playingSoundPosition;
+    private ImageButton playingImageButton;
 
     public MusicListAdapter(Context context, Cursor cursor) {
         this.context = context;
@@ -80,19 +78,36 @@ public class MusicListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 GridLayout gl = (GridLayout) view.getParent();
                 ListView lv = (ListView) gl.getParent();
+                ImageButton imageButton = (ImageButton) view;
 
                 int position = lv.getPositionForView(gl);
                 cursor.moveToPosition(position);
-                System.out.println("Position: " + position);
-                //Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, position);
                 Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
-                System.out.println("URI: " + uri);
-                mediaPlayer = MediaPlayer.create(context, uri);
-                //mediaPlayer.setDataSource(context, uri);
-                //mediaPlayer.prepareAsync();
-                mediaPlayer.start();
 
-                //Toast.makeText(context, "Przycisk " + name, Toast.LENGTH_SHORT).show();
+                if (playing) {
+                    playingImageButton.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
+                    mediaPlayer.stop();
+                    cursor.moveToPosition(playingSoundPosition);
+                    playing = false;
+                    if (playingSoundPosition != position) {
+                        imageButton.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
+
+                        playingImageButton = imageButton;
+                        playingSoundPosition = position;
+                        mediaPlayer = MediaPlayer.create(context, uri);
+                        mediaPlayer.start();
+                        playing = true;
+                    }
+                } else {
+                    imageButton.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
+                    playingImageButton = imageButton;
+                    playingSoundPosition = position;
+                    mediaPlayer = MediaPlayer.create(context, uri);
+                    mediaPlayer.start();
+                    playing = true;
+                }
+
+
             }
         });
 
