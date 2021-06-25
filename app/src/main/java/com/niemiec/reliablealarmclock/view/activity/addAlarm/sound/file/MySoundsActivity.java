@@ -1,6 +1,7 @@
 package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -61,13 +62,12 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
             cursor.moveToPosition(position);
             Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Media._ID)));
 
+            Intent intent = new Intent();
+            intent.putExtra("uri", uri.toString());
+            setResult(RESULT_OK, intent);
+            finish();
 
-            Toast.makeText(MySoundsActivity.this, "URI: " + uri.toString(), Toast.LENGTH_SHORT).show();
         });
-
-
-
-
     }
 
     private void createMySoundsPresenter() {

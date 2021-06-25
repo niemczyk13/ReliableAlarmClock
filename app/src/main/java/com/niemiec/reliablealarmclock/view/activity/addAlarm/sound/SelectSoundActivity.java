@@ -1,6 +1,7 @@
 package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
@@ -8,6 +9,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.MenuItem;
@@ -42,7 +44,7 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
 
         createSelectSoundPresenter();
 
-
+        //TODO Dopisanie nowych melodii i lista i wyyberanie i powrót do AddAlarmActivity
     }
 
     private void addBackArrow() {
@@ -64,6 +66,24 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
     @OnClick(R.id.add_new_sound_text_view)
     public void addNewSoundTextViewClick(View view) {
         Intent intent = new Intent(this, MySoundsActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    //TODO
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                if (data != null) {
+                    String uri = data.getStringExtra("uri");
+                    Intent intent = new Intent();
+                    intent.putExtra("uri", uri);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            }
+        }
     }
 }

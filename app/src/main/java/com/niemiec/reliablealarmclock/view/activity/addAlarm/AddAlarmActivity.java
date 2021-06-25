@@ -1,5 +1,6 @@
 package com.niemiec.reliablealarmclock.view.activity.addAlarm;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
@@ -26,6 +27,7 @@ import com.google.android.material.button.MaterialButton;
 import com.niemiec.reliablealarmclock.R;
 import com.niemiec.reliablealarmclock.view.activity.MainActivity;
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.SelectSoundActivity;
+import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MySoundsActivity;
 import com.niemiec.reliablealarmclock.view.fragment.dialog.CalendarDialogFragment;
 
 import java.util.Calendar;
@@ -220,7 +222,22 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @OnClick({R.id.sound_path_title_text_view, R.id.sound_path_text_view})
     public void onSelectSoundClick(View view) {
         Intent intent = new Intent(this, SelectSoundActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    //TODO
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                if (data != null) {
+                    String uri = data.getStringExtra("uri");
+                    soundPath.setText(uri);
+                }
+            }
+        }
     }
 
     @OnClick(R.id.rising_volume_switch)
