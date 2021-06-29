@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.GridLayout;
@@ -18,7 +19,8 @@ public class PlayButtonManager {
     private Cursor cursor;
     private MediaPlayer mediaPlayer;
     private boolean playingSong = false;
-    private int playingSoundPosition;
+    private int playingSoundId;
+    private int playingSoundPosition = -1;
     private ImageButton playingImageButton;
     private int positionClicked;
     private ImageButton imageButtonClicked;
@@ -36,7 +38,18 @@ public class PlayButtonManager {
             ifClickPlayAnotherSong();
         } else {
             play();
+            getSoundIdFromCursor();
         }
+    }
+
+    private void getSoundIdFromCursor() {
+        cursor.moveToPosition(playingSoundPosition);
+        playingSoundId = Integer.parseInt(cursor.getString(cursor.getColumnIndex(BaseColumns._ID)));
+
+    }
+
+    public int getSoundId() {
+        return playingSoundId;
     }
 
     private void getPositionAndButtonClicked(View view) {
@@ -59,6 +72,8 @@ public class PlayButtonManager {
     private void ifClickPlayAnotherSong() {
         if (playingSoundPosition != positionClicked) {
             play();
+        } else {
+            playingSoundPosition = -1;
         }
     }
 
@@ -88,5 +103,13 @@ public class PlayButtonManager {
     public void stopMusic() {
         mediaPlayer.stop();
         playingSong = false;
+    }
+
+    public void setContext(Context applicationContext) {
+        this.context = applicationContext;
+    }
+
+    public void setCursor(Cursor cursor) {
+        this.cursor = cursor;
     }
 }

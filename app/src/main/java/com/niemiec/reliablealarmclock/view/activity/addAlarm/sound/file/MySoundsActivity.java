@@ -32,11 +32,13 @@ import com.niemiec.reliablealarmclock.view.activity.MainActivity;
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.AddAlarmActivity;
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.SelectSoundActivity;
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter.MusicListAdapter;
+import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter.PlayButtonManager;
 
 
 public class MySoundsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, MySoundsContractMVP.View {
 
     private MusicListAdapter adapter;
+    private PlayButtonManager playButtonManager;
     private ActionBar actionBar;
     private MySoundPresenter presenter;
     private String filter;
@@ -56,11 +58,15 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
         ButterKnife.bind(this);
         actionBar = getSupportActionBar();
         addBackArrow();
+        playButtonManager = new PlayButtonManager(this, cursor);
+        //playButtonManager.setContext(getApplicationContext());
+        //playButtonManager.setCursor(cursor);
         showMusicList();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
                 filter = MediaStore.MediaColumns.TITLE + " LIKE '%" + query + "%' OR " + MediaStore.Audio.AlbumColumns.ARTIST + " LIKE '%" + query + "%'";
                 getSupportLoaderManager().restartLoader(1, null, MySoundsActivity.this);
                 return false;
@@ -119,7 +125,8 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
         this.cursor = cursor;
-        adapter = new MusicListAdapter(this, cursor);
+        playButtonManager.setCursor(cursor);
+        adapter = new MusicListAdapter(this, cursor, playButtonManager);
         filesListView.setAdapter(adapter);
     }
 

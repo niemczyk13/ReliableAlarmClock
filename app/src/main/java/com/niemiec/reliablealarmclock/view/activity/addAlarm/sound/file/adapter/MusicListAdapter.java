@@ -2,6 +2,7 @@ package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter
 
 import android.content.Context;
 import android.database.Cursor;
+import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,17 +20,17 @@ import java.util.ArrayList;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
-public class MusicListAdapter extends BaseAdapter {
+public class MusicListAdapter extends BaseAdapter implements Filterable {
     private Cursor cursor;
     private Context context;
     private LayoutInflater inflater;
     private PlayButtonManager playButtonManager;
 
-    public MusicListAdapter(Context context, Cursor cursor) {
+    public MusicListAdapter(Context context, Cursor cursor, PlayButtonManager playButtonManager) {
         this.context = context;
         this.cursor = cursor;
         inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-        playButtonManager = new PlayButtonManager(context, cursor);
+        this.playButtonManager = playButtonManager;
     }
 
     @Override
@@ -66,7 +67,13 @@ public class MusicListAdapter extends BaseAdapter {
     private void setValuesInViewHolder(ViewHolder viewHolder) {
         viewHolder.author.setText(getAuthor());
         viewHolder.title.setText(cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.TITLE)));
-        viewHolder.playButton.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
+        int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(BaseColumns._ID)));
+        System.out.println("ID: " + id + ", pbm id: " + playButtonManager.getSoundId());
+        if (playButtonManager.getSoundId() != id) {
+            viewHolder.playButton.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
+        } else {
+            viewHolder.playButton.setImageResource(R.drawable.ic_baseline_stop_circle_24);
+        }
         viewHolder.playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,6 +92,11 @@ public class MusicListAdapter extends BaseAdapter {
 
     public void stopMusic() {
         playButtonManager.stopMusic();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
     }
 
     class ViewHolder {
