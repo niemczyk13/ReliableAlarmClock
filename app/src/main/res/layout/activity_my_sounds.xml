@@ -7,7 +7,7 @@
     tools:context=".view.activity.addAlarm.sound.file.MySoundsActivity"
     android:orientation="vertical">
 
-    <SearchView
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/sound_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

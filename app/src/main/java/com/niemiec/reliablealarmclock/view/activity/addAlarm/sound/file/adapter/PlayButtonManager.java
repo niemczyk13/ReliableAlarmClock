@@ -79,9 +79,14 @@ public class PlayButtonManager {
     }
 
     private void startMediaPlayer(Uri uri) {
-        imageButtonClicked.setImageResource(R.drawable.ic_baseline_pause_circle_filled_24);
+        imageButtonClicked.setImageResource(R.drawable.ic_baseline_stop_circle_24);
         mediaPlayer = MediaPlayer.create(context, uri);
         mediaPlayer.start();
         playingSong = true;
+    }
+
+    public void stopMusic() {
+        mediaPlayer.stop();
+        playingSong = false;
     }
 }

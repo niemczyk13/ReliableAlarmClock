@@ -7,10 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.niemiec.reliablealarmclock.R;
+
+import java.util.ArrayList;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
@@ -76,6 +81,10 @@ public class MusicListAdapter extends BaseAdapter {
             author = context.getResources().getString(R.string.author_unkown);
         }
         return author;
+    }
+
+    public void stopMusic() {
+        playButtonManager.stopMusic();
     }
 
     class ViewHolder {

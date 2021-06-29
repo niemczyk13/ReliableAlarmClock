@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
@@ -27,6 +28,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.niemiec.reliablealarmclock.R;
+import com.niemiec.reliablealarmclock.view.activity.MainActivity;
+import com.niemiec.reliablealarmclock.view.activity.addAlarm.AddAlarmActivity;
+import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.SelectSoundActivity;
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.adapter.MusicListAdapter;
 
 
@@ -35,9 +39,13 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
     private MusicListAdapter adapter;
     private ActionBar actionBar;
     private MySoundPresenter presenter;
+    private String filter;
 
     @BindView(R.id.sounds_list_view)
     ListView filesListView;
+
+    @BindView(R.id.sound_search_view)
+    SearchView searchView;
 
     private Cursor cursor;
 
@@ -48,15 +56,27 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
         ButterKnife.bind(this);
         actionBar = getSupportActionBar();
         addBackArrow();
-        createMySoundsPresenter();
-
         showMusicList();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filter = MediaStore.MediaColumns.TITLE + " LIKE '%" + query + "%' OR " + MediaStore.Audio.AlbumColumns.ARTIST + " LIKE '%" + query + "%'";
+                getSupportLoaderManager().restartLoader(1, null, MySoundsActivity.this);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter = MediaStore.MediaColumns.TITLE + " LIKE '%" + newText + "%' OR " + MediaStore.Audio.AlbumColumns.ARTIST + " LIKE '%" + newText + "%'";
+                getSupportLoaderManager().restartLoader(1, null, MySoundsActivity.this);
+                return false;
+            }
+        });
     }
 
     private void showMusicList() {
         getSupportLoaderManager().initLoader(1, null, this);
-        //LoaderManager.getInstance(this).initLoader(0, null, null);
-
 
         filesListView.setOnItemClickListener((AdapterView<?> adapterView, View view, int position, long id) -> {
             cursor.moveToPosition(position);
@@ -68,6 +88,13 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
             finish();
 
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //TODO DO DOPRACOWANIA
+        adapter.stopMusic();
     }
 
     private void createMySoundsPresenter() {
@@ -83,7 +110,7 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        CursorLoader cl =  new CursorLoader(this, uri, null, null, null, null);
+        CursorLoader cl =  new CursorLoader(this, uri, null, filter, null, null);
         cl.setSortOrder(MediaStore.MediaColumns.TITLE + " ASC" );
         return cl;
     }
