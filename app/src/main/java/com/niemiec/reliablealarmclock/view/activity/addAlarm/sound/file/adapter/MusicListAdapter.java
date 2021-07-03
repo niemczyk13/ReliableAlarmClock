@@ -10,15 +10,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.niemiec.reliablealarmclock.R;
 
-import java.util.ArrayList;
-
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 
 public class MusicListAdapter extends BaseAdapter implements Filterable {
     private Cursor cursor;
@@ -59,27 +57,36 @@ public class MusicListAdapter extends BaseAdapter implements Filterable {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        setValuesInViewHolder(viewHolder);
+        setValuesInViewHolder(viewHolder, position);
 
         return view;
     }
 
-    private void setValuesInViewHolder(ViewHolder viewHolder) {
+    private void setValuesInViewHolder(ViewHolder viewHolder, int position) {
         viewHolder.author.setText(getAuthor());
         viewHolder.title.setText(cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.TITLE)));
-        int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(BaseColumns._ID)));
-        System.out.println("ID: " + id + ", pbm id: " + playButtonManager.getSoundId());
-        if (playButtonManager.getSoundId() != id) {
-            viewHolder.playButton.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
-        } else {
-            viewHolder.playButton.setImageResource(R.drawable.ic_baseline_stop_circle_24);
-        }
+        setImageResource(viewHolder, position);
         viewHolder.playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 playButtonManager.onClick(view);
             }
         });
+    }
+
+    private void setImageResource(ViewHolder viewHolder, int position) {
+        if (theSongIsNotPlaying()) {
+            viewHolder.playButton.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
+        } else {
+            viewHolder.playButton.setImageResource(R.drawable.ic_baseline_stop_circle_24);
+            playButtonManager.setImageButton(viewHolder.playButton);
+            playButtonManager.setPlayingSoundPosition(position);
+        }
+    }
+
+    private boolean theSongIsNotPlaying() {
+        int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(BaseColumns._ID)));
+        return playButtonManager.getSoundId() != id;
     }
 
     private String getAuthor() {

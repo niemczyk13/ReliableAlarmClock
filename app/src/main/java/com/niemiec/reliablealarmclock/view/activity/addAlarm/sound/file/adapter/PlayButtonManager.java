@@ -34,12 +34,16 @@ public class PlayButtonManager {
         getPositionAndButtonClicked(view);
 
         if (playingSong) {
-            stop();
+            stopTheMusic();
             ifClickPlayAnotherSong();
         } else {
-            play();
-            getSoundIdFromCursor();
+            startTheMusic();
         }
+    }
+
+    private void startTheMusic() {
+        play();
+        getSoundIdFromCursor();
     }
 
     private void getSoundIdFromCursor() {
@@ -63,15 +67,16 @@ public class PlayButtonManager {
         return lv.getPositionForView(gl);
     }
 
-    private void stop() {
+    private void stopTheMusic() {
         playingImageButton.setImageResource(R.drawable.ic_baseline_play_circle_outline_24);
         mediaPlayer.stop();
         playingSong = false;
+        playingSoundId = -1;
     }
 
     private void ifClickPlayAnotherSong() {
         if (playingSoundPosition != positionClicked) {
-            play();
+            startTheMusic();
         } else {
             playingSoundPosition = -1;
         }
@@ -105,11 +110,15 @@ public class PlayButtonManager {
         playingSong = false;
     }
 
-    public void setContext(Context applicationContext) {
-        this.context = applicationContext;
-    }
-
     public void setCursor(Cursor cursor) {
         this.cursor = cursor;
+    }
+
+    public void setImageButton(ImageButton ib) {
+        playingImageButton = ib;
+    }
+
+    public void setPlayingSoundPosition(int position) {
+        this.playingSoundPosition = position;
     }
 }
