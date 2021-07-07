@@ -116,6 +116,7 @@ public class MySoundsActivity extends AppCompatActivity implements LoaderManager
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+        //Uri uri = Uri.parse("android.resource://" + getPackageName() + "/res/raw");
         CursorLoader cl =  new CursorLoader(this, uri, null, filter, null, null);
         cl.setSortOrder(MediaStore.MediaColumns.TITLE + " ASC" );
         return cl;

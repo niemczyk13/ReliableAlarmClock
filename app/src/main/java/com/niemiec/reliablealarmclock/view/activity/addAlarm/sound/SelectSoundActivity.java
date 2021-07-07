@@ -8,7 +8,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +24,7 @@ import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MyFileAc
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MySoundsActivity;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,6 +33,9 @@ import java.util.List;
 public class SelectSoundActivity extends AppCompatActivity implements SelectSoundContractMVP.View {
 
     private SelectSoundPresenter presenter;
+    private AlarmSoundData data = new AlarmSoundData();
+    private SelectSoundAdapter adapter;
+    private MediaPlayer mediaPlayer;
     @BindView(R.id.file_list_view)
     ListView fileListView;
 
@@ -43,6 +49,19 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
 
 
         createSelectSoundPresenter();
+        //TODO
+        adapter = new SelectSoundAdapter(this, data);
+        fileListView.setAdapter(adapter);
+
+
+        fileListView.setOnItemClickListener((adapterView, view, position, l) -> {
+            Sound sound = data.get(position);
+            mediaPlayer = MediaPlayer.create(this, sound.getId());
+            mediaPlayer.start();
+            sound.setChecked(true);
+        });
+
+
 
         //TODO Dopisanie nowych melodii i lista i wyyberanie i powrót do AddAlarmActivity
     }
@@ -69,7 +88,7 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
         startActivityForResult(intent, 1);
     }
 
-    //TODO
+    //TODO to co zwraca wywołana aktywność
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

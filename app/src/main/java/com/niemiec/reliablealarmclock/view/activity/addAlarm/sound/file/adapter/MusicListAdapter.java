@@ -50,7 +50,7 @@ public class MusicListAdapter extends BaseAdapter implements Filterable {
         cursor.moveToPosition(position);
 
         if (view == null) {
-            view = inflater.inflate(R.layout.music_list_row, parent, false);
+            view = inflater.inflate(R.layout.music_list_item, parent, false);
             viewHolder = new ViewHolder(view);
             view.setTag(viewHolder);
         } else {
