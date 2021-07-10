@@ -8,10 +8,13 @@ import java.util.List;
 public class AlarmSoundData {
     private List<Sound> sounds;
 
-    public AlarmSoundData() {
+    public AlarmSoundData(int defaultCheckedPosition) {
         sounds = new ArrayList<>();
         sounds.add(new Sound("Pierwszy", R.raw.closer));
         sounds.add(new Sound("Drugi", R.raw.creep));
+
+        //Zaznaczenie domyślnego dzwonka
+        sounds.get(defaultCheckedPosition).setChecked(true);
     }
 
     public int getSize() {

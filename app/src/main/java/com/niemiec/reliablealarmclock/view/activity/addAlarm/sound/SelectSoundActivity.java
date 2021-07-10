@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.niemiec.reliablealarmclock.R;
+import com.niemiec.reliablealarmclock.data.DefaultValues;
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MyFileActivity;
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MySoundsActivity;
 
@@ -33,7 +34,7 @@ import java.util.List;
 public class SelectSoundActivity extends AppCompatActivity implements SelectSoundContractMVP.View {
 
     private SelectSoundPresenter presenter;
-    private AlarmSoundData data = new AlarmSoundData();
+    private AlarmSoundData data = new AlarmSoundData(DefaultValues.SOUND_POSITION.value());
     private SelectSoundAdapter adapter;
     private MediaPlayer mediaPlayer;
     @BindView(R.id.file_list_view)
@@ -55,10 +56,7 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
 
 
         fileListView.setOnItemClickListener((adapterView, view, position, l) -> {
-            Sound sound = data.get(position);
-            mediaPlayer = MediaPlayer.create(this, sound.getId());
-            mediaPlayer.start();
-            sound.setChecked(true);
+            presenter.itemClick(position);
         });
 
 
@@ -78,7 +76,7 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
     }
 
     private void createSelectSoundPresenter() {
-        presenter = new SelectSoundPresenter();
+        presenter = new SelectSoundPresenter(this, data);
         presenter.attach(this);
     }
 
@@ -104,5 +102,10 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
                 }
             }
         }
+    }
+
+    @Override
+    public void updateListView() {
+        adapter.notifyDataSetChanged();
     }
 }

@@ -1,6 +1,7 @@
 package com.niemiec.reliablealarmclock.data;
 
 public enum DefaultValues {
+    SOUND_POSITION(1),
     PERCENT(5),
     MAX_VOLUME(100),
     VOLUME(80);

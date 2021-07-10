@@ -217,6 +217,7 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
 
     @Override
     public void getDefaultSound() {
+        //TODO - pobierany z menu i z bazy danych
         view.showSoundPath(DefaultStringValues.SOUND_PATH.value());
     }
 

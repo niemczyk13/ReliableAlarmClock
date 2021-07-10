@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.niemiec.reliablealarmclock.R;
@@ -72,11 +73,11 @@ public class SelectSoundAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        ImageButton check;
+        ImageView check;
         TextView name;
 
         public ViewHolder(View view) {
-            check = view.findViewById(R.id.check_image_button);
+            check = view.findViewById(R.id.check_image_view);
             name = view.findViewById(R.id.name_text_view);
         }
     }
