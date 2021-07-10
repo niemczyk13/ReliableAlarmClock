@@ -8,28 +8,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.niemiec.reliablealarmclock.R;
 import com.niemiec.reliablealarmclock.data.DefaultValues;
-import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MyFileActivity;
 import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MySoundsActivity;
-
-import java.io.File;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 public class SelectSoundActivity extends AppCompatActivity implements SelectSoundContractMVP.View {
 
@@ -45,23 +33,26 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sound);
         ButterKnife.bind(this);
-
         addBackArrow();
-
-
         createSelectSoundPresenter();
-        //TODO
-        adapter = new SelectSoundAdapter(this, data);
-        fileListView.setAdapter(adapter);
+        createAdapterAndAddInListView();
+        addOnItemClickListenerToFileListView();
 
-
-        fileListView.setOnItemClickListener((adapterView, view, position, l) -> {
-            presenter.itemClick(position);
-        });
 
 
 
         //TODO Dopisanie nowych melodii i lista i wyyberanie i powrót do AddAlarmActivity
+    }
+
+    private void addOnItemClickListenerToFileListView() {
+        fileListView.setOnItemClickListener((adapterView, view, position, l) -> {
+            presenter.itemClick(position);
+        });
+    }
+
+    private void createAdapterAndAddInListView() {
+        adapter = new SelectSoundAdapter(this, data);
+        fileListView.setAdapter(adapter);
     }
 
     private void addBackArrow() {
@@ -108,4 +99,20 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
     public void updateListView() {
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void setResultAndFinish(Intent intent) {
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @OnClick(R.id.ok_button)
+    public void okButtonClick(View view) {
+
+        presenter.okButtonClick();
+
+
+    }
+
+
 }

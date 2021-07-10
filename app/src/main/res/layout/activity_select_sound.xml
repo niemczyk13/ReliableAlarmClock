@@ -37,5 +37,23 @@
         app:layout_constraintTop_toBottomOf="@id/application_sounds_text_view"
         />
 
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/file_list_view"
+        />
+
+    <Button
+        android:id="@+id/ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        app:layout_constraintLeft_toRightOf="@+id/cancel_button"
+        app:layout_constraintTop_toBottomOf="@+id/file_list_view"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

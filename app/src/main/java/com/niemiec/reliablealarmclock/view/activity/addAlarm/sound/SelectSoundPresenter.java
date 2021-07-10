@@ -1,6 +1,7 @@
 package com.niemiec.reliablealarmclock.view.activity.addAlarm.sound;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 
 import com.niemiec.reliablealarmclock.data.DefaultValues;
@@ -11,7 +12,7 @@ public class SelectSoundPresenter extends BasePresenter<SelectSoundContractMVP.V
     private AlarmSoundData data;
 
     private MediaPlayer player;
-    private int markedPosition = DefaultValues.SOUND_POSITION.value();
+    private int markedPosition;
     private boolean isPlaying = false;
     private Sound markedSound;
     private int clickPosition;
@@ -19,7 +20,9 @@ public class SelectSoundPresenter extends BasePresenter<SelectSoundContractMVP.V
     public SelectSoundPresenter(Context context, AlarmSoundData data) {
         this.context = context;
         this.data = data;
-        this.markedSound = data.get(DefaultValues.SOUND_POSITION.value());
+
+        this.markedPosition = DefaultValues.SOUND_POSITION.value();
+        this.markedSound = data.get(markedPosition);
     }
 
     @Override
@@ -30,6 +33,20 @@ public class SelectSoundPresenter extends BasePresenter<SelectSoundContractMVP.V
         } else {
             stopOrPlayTheSameSong();
         }
+    }
+
+    @Override
+    public void okButtonClick() {
+        stopMusic();
+        String id = Integer.toString(markedSound.getId());
+        Intent intent = createIntentAndAddArgument(id);
+        view.setResultAndFinish(intent);
+    }
+
+    private Intent createIntentAndAddArgument(String id) {
+        Intent intent = new Intent();
+        intent.putExtra("id", id);
+        return intent;
     }
 
     private boolean isClickedOtherSong() {
@@ -46,8 +63,10 @@ public class SelectSoundPresenter extends BasePresenter<SelectSoundContractMVP.V
     }
 
     private void stopMusic() {
-        player.stop();
-        isPlaying = false;
+        if (isPlaying) {
+            player.stop();
+            isPlaying = false;
+        }
     }
 
     private void updateUncheckedSound() {
@@ -64,9 +83,11 @@ public class SelectSoundPresenter extends BasePresenter<SelectSoundContractMVP.V
     }
 
     private void playMusic() {
-        player = MediaPlayer.create(context, markedSound.getId());
-        player.start();
-        isPlaying = true;
+        if (!isPlaying) {
+            player = MediaPlayer.create(context, markedSound.getId());
+            player.start();
+            isPlaying = true;
+        }
     }
 
     private void stopOrPlayTheSameSong() {
