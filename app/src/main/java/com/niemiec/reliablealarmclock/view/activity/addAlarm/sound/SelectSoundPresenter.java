@@ -45,7 +45,7 @@ public class SelectSoundPresenter extends BasePresenter<SelectSoundContractMVP.V
 
     private Intent createIntentAndAddArgument(String id) {
         Intent intent = new Intent();
-        intent.putExtra("id", id);
+        intent.putExtra("uri", id);
         return intent;
     }
 

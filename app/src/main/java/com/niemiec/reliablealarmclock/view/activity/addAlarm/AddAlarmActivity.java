@@ -234,10 +234,6 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
             if (requestCode == 1) {
                 if (data != null) {
                     String uri = data.getStringExtra("uri");
-                    if (uri == null) {
-                        uri = data.getStringExtra("id");
-                    }
-
                     soundPath.setText(uri);
                 }
             }
