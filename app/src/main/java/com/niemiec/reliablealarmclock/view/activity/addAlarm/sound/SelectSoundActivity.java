@@ -22,7 +22,7 @@ import com.niemiec.reliablealarmclock.view.activity.addAlarm.sound.file.MySounds
 public class SelectSoundActivity extends AppCompatActivity implements SelectSoundContractMVP.View {
 
     private SelectSoundPresenter presenter;
-    private AlarmSoundData data = new AlarmSoundData(DefaultValues.SOUND_POSITION.value());
+    private AlarmSoundData data = AlarmSoundData.getInstance();
     private SelectSoundAdapter adapter;
     private MediaPlayer mediaPlayer;
     @BindView(R.id.file_list_view)
@@ -67,7 +67,7 @@ public class SelectSoundActivity extends AppCompatActivity implements SelectSoun
     }
 
     private void createSelectSoundPresenter() {
-        presenter = new SelectSoundPresenter(this, data);
+        presenter = new SelectSoundPresenter(this);
         presenter.attach(this);
     }
 

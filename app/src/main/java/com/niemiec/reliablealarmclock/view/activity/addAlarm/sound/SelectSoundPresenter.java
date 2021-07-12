@@ -9,7 +9,7 @@ import com.niemiec.reliablealarmclock.view.activity.BasePresenter;
 
 public class SelectSoundPresenter extends BasePresenter<SelectSoundContractMVP.View> implements SelectSoundContractMVP.Presenter {
     private Context context;
-    private AlarmSoundData data;
+    private AlarmSoundData data = AlarmSoundData.getInstance();
 
     private MediaPlayer player;
     private int markedPosition;
@@ -17,11 +17,10 @@ public class SelectSoundPresenter extends BasePresenter<SelectSoundContractMVP.V
     private Sound markedSound;
     private int clickPosition;
 
-    public SelectSoundPresenter(Context context, AlarmSoundData data) {
+    public SelectSoundPresenter(Context context) {
         this.context = context;
-        this.data = data;
 
-        this.markedPosition = DefaultValues.SOUND_POSITION.value();
+        this.markedPosition = data.getMarkedPosition();
         this.markedSound = data.get(markedPosition);
     }
 
@@ -76,6 +75,7 @@ public class SelectSoundPresenter extends BasePresenter<SelectSoundContractMVP.V
     private void replaceMarkedSound() {
         markedSound = data.get(clickPosition);
         markedPosition = clickPosition;
+        data.setMarkedPosition(markedPosition);
     }
 
     private void updateMarkedSound() {
