@@ -66,6 +66,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hour_edit_text" />
 
+    <TextView
+        android:id="@+id/repeat_days_information_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEXTTTTTTTTTT"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/repeat_text_view"/>
+
     <ImageButton
         android:id="@+id/calendar_image_button"
         android:layout_width="54dp"
@@ -204,6 +212,97 @@
 
     </LinearLayout>
 
+    <GridLayout
+        android:id="@+id/percent_or_time_buttons_grid_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rowCount="2"
+        android:columnCount="4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/percent_time_linear_layout">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/percent_or_time_first_button"
+            android:height="50dp"
+            android:width="0dp"
+            android:layout_rowWeight="1"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:text="TEST"
+        />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/percent_or_time_second_button"
+            android:height="50dp"
+            android:width="0dp"
+            android:layout_rowWeight="1"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="TEST"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/percent_or_time_third_button"
+            android:height="50dp"
+            android:width="0dp"
+            android:layout_rowWeight="1"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:text="TEST"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/percent_or_time_fourth_button"
+            android:height="50dp"
+            android:width="0dp"
+            android:layout_rowWeight="1"
+            android:layout_row="0"
+            android:layout_column="3"
+            android:text="TEST"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/percent_or_time_fifth_button"
+            android:height="50dp"
+            android:width="0dp"
+            android:layout_rowWeight="1"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:text="TEST"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/percent_or_time_sixth_button"
+            android:height="50dp"
+            android:width="0dp"
+            android:layout_rowWeight="1"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:text="TEST"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/percent_or_time_seventh_button"
+            android:height="50dp"
+            android:width="0dp"
+            android:layout_rowWeight="1"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:text="TEST"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/percent_or_time_eighth_button"
+            android:height="50dp"
+            android:width="0dp"
+            android:layout_rowWeight="1"
+            android:layout_row="1"
+            android:layout_column="3"
+            android:text="TEST"
+            />
+    </GridLayout>
+
+    <!--
     <EditText
         android:id="@+id/percent_or_time_edit_text"
         android:layout_width="200dp"
@@ -218,14 +317,14 @@
         android:maxLength="2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/percent_time_linear_layout" />
-
+-->
 
     <TextView
         android:id="@+id/sound_path_title_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent_or_time_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/percent_or_time_buttons_grid_layout"
         android:text="@string/alarm_sound"
         />
 
@@ -234,7 +333,7 @@
         android:layout_width="206dp"
         android:layout_height="27dp"
         app:layout_constraintStart_toEndOf="@+id/sound_path_title_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/percent_or_time_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/percent_or_time_buttons_grid_layout" />
 
     <TextView
         android:id="@+id/alarm_volume_text_view"
@@ -275,23 +374,48 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vibration_text_view" />
 
-    <Switch
-        android:id="@+id/rising_volume_switch"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/rising_volume_linear_Layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@+id/rising_volume_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/vibration_switch" />
+        app:layout_constraintTop_toBottomOf="@+id/vibration_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/rising_volume_edit_text"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:digits="0123456789"
-        android:maxLines="1"
-        android:maxLength="3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rising_volume_text_view" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/off_rising_volume_button"
+            android:padding="1dp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="@string/nothing_choice_button"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/first_rising_volume_button"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="30s"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/second_rising_volume_button"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="60s"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/third_rising_volume_button"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="90s"/>
+
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/cancel_button"
@@ -300,7 +424,7 @@
         android:onClick="cancelAddAlarm"
         android:text="@string/cancel_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rising_volume_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/rising_volume_linear_Layout" />
 
     <Button
         android:id="@+id/save_button"
@@ -309,7 +433,8 @@
         android:onClick="saveAlarm"
         android:text="@string/save_button"
         app:layout_constraintStart_toEndOf="@+id/cancel_button"
-        app:layout_constraintTop_toBottomOf="@+id/rising_volume_edit_text" />
+        app:layout_constraintTop_toBottomOf="@+id/rising_volume_linear_Layout"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

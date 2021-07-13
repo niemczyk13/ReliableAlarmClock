@@ -76,11 +76,11 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
         int time;
         switch (radioButtonId) {
             case R.id.percent_choice_button:
-                precent = Integer.parseInt(view.getPercentOrTimeValue());
+//                precent = Integer.parseInt(view.getPercentOrTimeValue());
                 setBatteryPrecetange();
                 break;
             case R.id.time_choice_button:
-                time = Integer.parseInt(view.getPercentOrTimeValue());
+//                time = Integer.parseInt(view.getPercentOrTimeValue());
                 setTimeToDischarge();
                 break;
             default:
@@ -97,7 +97,7 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
     // TODO
     private void setTimeToDischarge() {
         // jeżeli > 0 to duration, inaczej Time
-        int time = Integer.parseInt(view.getPercentOrTimeValue());
+        int time = 0;// Integer.parseInt(view.getPercentOrTimeValue());
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
         //    alarm.setTimeToDischarge(Time.valueOf(Integer.toString(time )));
         }
@@ -230,11 +230,6 @@ public class AddAlarmPresenter extends BasePresenter<AddAlarmContractMVP.View> i
     @Override
     public void getDefaultVibrationValue() {
         view.setVibration(DefaultSwitchValues.VIBRATION.value());
-    }
-
-    @Override
-    public void getDefaultRisingVolume() {
-        view.setRisingVolume(DefaultSwitchValues.RISING_VOLUME.value());
     }
 
     @Override

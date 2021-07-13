@@ -5,7 +5,7 @@ public interface AddAlarmContractMVP {
     interface View {
         String getHour();
         String getMinute();
-        String getPercentOrTimeValue();
+        //String getPercentOrTimeValue();
         int getCheckedPercentOrTimeId();
 
         void showHour(String hour);
@@ -19,7 +19,6 @@ public interface AddAlarmContractMVP {
         void setMaxVolume(int maxVolume);
         void setVolume(int volume);
         void setVibration(boolean value);
-        void setRisingVolume(boolean risingVolume);
         void selectHour();
         void selectMinute();
         void setPercentOrTimeGroupCheck(boolean nothing, boolean percent, boolean time);
@@ -40,7 +39,6 @@ public interface AddAlarmContractMVP {
         void getDefaultSound();
         void getDefaultVolume();
         void getDefaultVibrationValue();
-        void getDefaultRisingVolume();
         void activatedHourEditText();
      }
 }

@@ -53,15 +53,22 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @BindView(R.id.percent_choice_button) MaterialButton percentChoiceButton;
     @BindView(R.id.time_choice_button) MaterialButton timeChoiceButton;
 
-    @BindView(R.id.percent_or_time_edit_text) EditText percentOrTime;
+    @BindView(R.id.percent_or_time_first_button) MaterialButton percentOrTime1Button;
+    @BindView(R.id.percent_or_time_second_button) MaterialButton percentOrTime2Button;
+    @BindView(R.id.percent_or_time_third_button) MaterialButton percentOrTime3Button;
+    @BindView(R.id.percent_or_time_fourth_button) MaterialButton percentOrTime4Button;
+    @BindView(R.id.percent_or_time_fifth_button) MaterialButton percentOrTime5Button;
+    @BindView(R.id.percent_or_time_sixth_button) MaterialButton percentOrTime6Button;
+    @BindView(R.id.percent_or_time_seventh_button) MaterialButton percentOrTime7Button;
+    @BindView(R.id.percent_or_time_eighth_button) MaterialButton percentOrTime8Button;
+
+
+    //@BindView(R.id.percent_or_time_edit_text) EditText percentOrTime;
     @BindView(R.id.sound_path_text_view) TextView soundPath;
 
     @BindView(R.id.alarm_volume_seek_bar) SeekBar alarmVolume;
 
     @BindView(R.id.vibration_switch) Switch vibration;
-
-    @BindView(R.id.rising_volume_switch) Switch risingVolumeSwitch;
-    @BindView(R.id.rising_volume_edit_text) EditText risingVolumeText;
 
     @BindView(R.id.cancel_button) Button cancel;
     @BindView(R.id.save_button) Button save;
@@ -93,7 +100,6 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         addAlarmPresenter.getDefaultSound();
         addAlarmPresenter.getDefaultVolume();
         addAlarmPresenter.getDefaultVibrationValue();
-        addAlarmPresenter.getDefaultRisingVolume();
     }
 
     private void activatedHourEditText() {
@@ -143,7 +149,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     }
 
 
-    @OnClick({R.id.hour_edit_text, R.id.minute_edit_text, R.id.percent_or_time_edit_text, R.id.rising_volume_edit_text})
+    @OnClick({R.id.hour_edit_text, R.id.minute_edit_text})
     public void selectAllInEditText(View view) {
         EditText et = findViewById(view.getId());
         et.selectAll();
@@ -240,11 +246,6 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         }
     }
 
-    @OnClick(R.id.rising_volume_switch)
-    public void risingVolumeSwitchClick(View view) {
-        risingVolumeText.setEnabled(risingVolumeSwitch.isEnabled());
-    }
-
     @OnClick(R.id.cancel_button)
     public void cancelAddAlarm(View view) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -266,10 +267,10 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
         return minute.getText().toString();
     }
 
-    @Override
-    public String getPercentOrTimeValue() {
-        return percentOrTime.getText().toString();
-    }
+    //@Override
+    //public String getPercentOrTimeValue() {
+    //    return percentOrTime.getText().toString();
+    //}
 
     @Override
     public int getCheckedPercentOrTimeId() {
@@ -325,7 +326,7 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
 
     @Override
     public void setThePercentageOrTimeToDischarge(int value) {
-        percentOrTime.setText(Integer.toString(value));
+       // percentOrTime.setText(Integer.toString(value));
     }
 
     @Override
@@ -346,12 +347,6 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     @Override
     public void setVibration(boolean value) {
         vibration.setChecked(value);
-    }
-
-    @Override
-    public void setRisingVolume(boolean risingVolume) {
-        risingVolumeSwitch.setChecked(risingVolume);
-        risingVolumeText.setEnabled(risingVolume);
     }
 
     @Override
@@ -376,7 +371,8 @@ public class AddAlarmActivity extends AppCompatActivity implements AddAlarmContr
     //TODO DO PRZEROBIENIA NA UKRYWANIE A NIE DEZAKTYWOWANIE
     @Override
     public void hidePercentOrTimeEditText(boolean hide) {
-        percentOrTime.setEnabled(hide);
+
+        //percentOrTime.setEnabled(hide);
     }
 
 
